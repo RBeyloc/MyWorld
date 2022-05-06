@@ -22,7 +22,7 @@ public class EjemplarList {
         }
     }
 
-    public HashMap<UUID, Ejemplar> onlyAvailable(){
+    public HashMap<UUID, Ejemplar> listAvailableEjemplares(){
         HashMap<UUID, Ejemplar> onlyAvailable = new HashMap<>();
 
         for (Map.Entry<UUID, Ejemplar> entry : ejemplares.entrySet()) {
