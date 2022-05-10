@@ -2,6 +2,7 @@ package com.company.view;
 
 import com.company.controller.UserController;
 import com.company.frontcontroller.FrontController;
+import com.company.test.EjemplarTest;
 import com.company.test.UserTest;
 import com.company.utils.Utilities;
 
@@ -29,6 +30,7 @@ public class IOView {
             } else if (command.equals("test")) {
                 //We create this feature to test our soft
                 UserTest.test();
+                EjemplarTest.test();
             } else if (command.equals("release")) {
                 //We create this feature to release our soft
                 releaseLoopView(reader);
@@ -173,7 +175,7 @@ public class IOView {
         return createLendingStatus;
     }
 
-    private static String createItem(Scanner reader) {
+    public static String createItem(Scanner reader) {
         //Let s introduce data to create a User
         String title = Utilities.ask(reader, "Title?");
         String author = Utilities.ask(reader, "Author?");
