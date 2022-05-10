@@ -2,6 +2,8 @@ package com.company.utils;
 
 import java.sql.*;
 import java.util.Scanner;
+import com.company.model.User;
+import com.company.model.UserMap;
 
 public class Utilities {
 
@@ -12,6 +14,16 @@ public class Utilities {
 
     public static void clearConsole() {
         System.out.println(System.lineSeparator().repeat(100));
+    }
+
+    public static String listEnabledUsersToString(UserMap users) {
+        String enabledUserList = "Enable users:\n";
+        if (!users.listEnabledUsers().isEmpty()) {
+            for (User user : users.listEnabledUsers().values()) {
+                enabledUserList += user.toString() + "\n";
+            }
+        }
+        return enabledUserList;
     }
 
     public static ResultSet DBPersistSQLRequest (String sql) throws SQLException {

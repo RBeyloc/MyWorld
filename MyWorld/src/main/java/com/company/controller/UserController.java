@@ -66,6 +66,8 @@ public class UserController {
         return listUsersResponse;
     }
 
+
+
     public static HashMap<String, String> checkUserEnabledByUUID(HashMap<String, String> dataToCheckUser) {
         UUID uuid = UUID.fromString(dataToCheckUser.get("uuid"));
 
