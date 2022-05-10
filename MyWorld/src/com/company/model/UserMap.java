@@ -1,8 +1,7 @@
 package com.company.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.UUID;
 
 public class UserMap {
 
@@ -29,7 +28,7 @@ public class UserMap {
         return this.UserList.get(userId);
     }
 
-    public HashMap<String,User> getActiveUsers() {
+    public HashMap<String, User> listEnabledUsers() {
         HashMap<String, User> activeUsersMap = null;
         for (User user : this.UserList.values()) {
             if (user.getStatus().equals("enabled")) {
@@ -47,11 +46,21 @@ public class UserMap {
         UserList = userList;
     }
 
+    public boolean existsUserUUID(UUID userUUID) {
+        return this.UserList.get(userUUID.toString()) != null;
+    }
+
+    public boolean isUserEnabled(UUID userUUID) {
+        User user = this.UserList.get(userUUID.toString());
+
+        return user != null && user.getStatus() == "enabled";
+    }
+
     @Override
     public String toString() {
         String usersList = "Users Map:\n";
-        if(!this.UserList.isEmpty()) {
-            for(User user : this.UserList.values()) {
+        if (!this.UserList.isEmpty()) {
+            for (User user : this.UserList.values()) {
                 usersList += user.toString() + "\n";
             }
         }

@@ -19,6 +19,8 @@ public class FrontController {
         else if (request.get("operation").equals( "listLendings")) response = LendingController.listLendings();
         else if (request.get("operation").equals( "listUsers")) response = UserController.listUsers();
         else if (request.get("operation").equals( "listItems")) response = EjemplarController.listItems();
+        else if (request.get("operation").equals( "listEnabledUsers")) response = UserController.listEnabledUsers();
+        else if (request.get("operation").equals( "checkUserEnabledByUUID")) response = UserController.checkUserEnabledByUUID(request);
 
         System.out.println(response);
 
