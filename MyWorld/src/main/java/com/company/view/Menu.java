@@ -18,6 +18,7 @@ public class Menu {
         //Utilities.clearConsole();
         System.out.println("1-Newuser");
         System.out.println("2-listUsers");
+        System.out.println("3-listEnabledUsers");
         System.out.println("0-Back");
     }
 

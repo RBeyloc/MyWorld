@@ -16,16 +16,6 @@ public class Utilities {
         System.out.println(System.lineSeparator().repeat(100));
     }
 
-    public static String listEnabledUsersToString(UserMap users) {
-        String enabledUserList = "Enable users:\n";
-        if (!users.listEnabledUsers().isEmpty()) {
-            for (User user : users.listEnabledUsers().values()) {
-                enabledUserList += user.toString() + "\n";
-            }
-        }
-        return enabledUserList;
-    }
-
     public static ResultSet DBPersistSQLRequest (String sql) throws SQLException {
         Connection connection = DBEstablishConnection();
         ResultSet resultset = DBRunStatement(connection, sql);
