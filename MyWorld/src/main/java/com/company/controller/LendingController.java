@@ -63,4 +63,19 @@ public class LendingController {
         }
         return listLendingsResponse;
     }
+
+    /*public static HashMap<String, String> makeDevolution(HashMap<String, String> request){
+        String ejemplarUUID = request.get("ejemplarUUID");
+        Ejemplar ejemplar = ejemplares.getEjemplarByUUID(ejemplarUUID);
+        Lending lending = lendings.getLastLendingByEjemplar(ejemplar);
+        boolean statusOperation = lending.devolution();
+
+        HashMap<String, String> devolutionResponse = new HashMap<>();
+        devolutionResponse.put("response", "make devolution");
+
+        if (statusOperation) devolutionResponse.put("status", "returned");
+        else devolutionResponse.put("status", "operation failed");
+
+        return devolutionResponse;
+    }*/
 }

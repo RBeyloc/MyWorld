@@ -24,9 +24,11 @@ public class Lending {
         this.status = status.ONDATE;
     }
 
-    public void devolution() {
+
+    public boolean devolution() {
         this.returnRealDate = LocalDate.now();
         this.status = status.RETURNED;
+        return true;
     }
 
     public void setOutOfDate() {
