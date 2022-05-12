@@ -87,9 +87,9 @@ public class EjemplarList {
         Ejemplar ejemplar01 = new Ejemplar("Around the World in 80 days", "Jules Verne");
         Ejemplar ejemplar02 = new Ejemplar("Mrs. Dalloway", "Virginia Woolf");
         Ejemplar ejemplar03 = new Ejemplar("To Kill a Mockingbird" , "Harper Lee");
-        Ejemplar ejemplar04 =  new Ejemplar("Cumbres Borrascosas" , "Emily Bronte");
+        Ejemplar ejemplar04 =  new Ejemplar("Cumbres Borrascosas" , "Emily Bronte", false);
         Ejemplar ejemplar05 =  new Ejemplar("Moby Dick" , "Herman Melville");
-        Ejemplar ejemplar06 =  new Ejemplar("Anna Karenina" , "Leon Tolstoi");
+        Ejemplar ejemplar06 =  new Ejemplar("Anna Karenina" , "Leon Tolstoi", false);
 
 
         ejemplares.put(ejemplar01.getSku(), ejemplar01);

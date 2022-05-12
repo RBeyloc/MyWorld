@@ -25,6 +25,17 @@ public class User {
         this.status = "enabled";
     }
 
+    public User(String name, String surname, String birthdate, String address, String email, String phoneNumber, String status) {
+        this.idNumber = UUID.randomUUID();
+        this.name = name;
+        this.surname = surname;
+        this.birthdate = birthdate;
+        this.address = address;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
+    }
+
     public UUID getIdNumber() {
         return idNumber;
     }

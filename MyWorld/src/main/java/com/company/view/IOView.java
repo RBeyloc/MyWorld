@@ -182,17 +182,26 @@ public class IOView {
             if (command.equals("Quit")) {
                 userId = "Quit";
                 break;
-            } else if(checkUserExistAndEnabled(reader, userId)) {
+            } else if(checkUserEnabledByUUID(reader, command)) {
                 userId = command;
+                break;
             }
         }
 
+        String ejemplarId = "";
+        while (true) {
+            System.out.println("Choose and write one of books Id (Quit to scape):\n");
+            listAvailableEjemplares(reader);
+            String command = Utilities.ask(reader, "Ejemplar Id?");
+            if (command.equals("Quit")) {
+                ejemplarId = "Quit";
+                break;
+            } else if(checkEjemplarAvailableByUUID(reader, command)) {
+                ejemplarId = command;
+                break;
+            }
+        }
 
-
-
-        listEjemplares(reader);
-        String ejemplarId = Utilities.ask(reader, "Ejemplar Id?");
-        // TODO check if ejemplar exists and is ENABLED to be lend; if no exit or ask again? separate method
         HashMap<String, String> createLendingRequest = new HashMap<>();
 
         //fill createLending request data hashmap object
@@ -208,9 +217,23 @@ public class IOView {
         return createLendingStatus;
     }
 
-    public static boolean checkUserExistAndEnabled(Scanner reader, String userId) {
-        boolean checked = true;
-        // TODO check user exists and is ENABLED to get a book; if not exit or ask again? separate method
+    public static boolean checkUserEnabledByUUID(Scanner reader, String userId) {
+        HashMap<String, String> checkUserEnabledByUUIDRequest = new HashMap<>();
+        checkUserEnabledByUUIDRequest.put("operation", "checkUserEnabledByUUID");
+        checkUserEnabledByUUIDRequest.put("uuid", userId);
+        HashMap<String, String> checkUserEnabledByUUIDResponse = FrontController.mainLoopController(checkUserEnabledByUUIDRequest);
+        String checkUserEnabledByUUIDStatus = checkUserEnabledByUUIDResponse.get("status");
+        boolean checked = checkUserEnabledByUUIDStatus.equals("Enabled user");
+        return checked;
+    }
+
+    public static boolean checkEjemplarAvailableByUUID(Scanner reader,String ejemplarId) {
+        HashMap<String, String> checkEjemplarAvailableByUUIDRequest = new HashMap<>();
+        checkEjemplarAvailableByUUIDRequest.put("operation", "checkUserEnabledByUUID");
+        checkEjemplarAvailableByUUIDRequest.put("uuid", ejemplarId);
+        HashMap<String, String> checkEjemplarAvailableByUUIDResponse = FrontController.mainLoopController(checkEjemplarAvailableByUUIDRequest);
+        String checkEjemplarAvailableByUUIDStatus = checkEjemplarAvailableByUUIDResponse.get("status");
+        boolean checked = checkEjemplarAvailableByUUIDStatus.equals("Book available");
         return checked;
     }
 
@@ -219,24 +242,24 @@ public class IOView {
         HashMap<String, String> listUsersRequest = new HashMap<>();
         listUsersRequest.put("operation", "listUsers");
 
-        HashMap<String, String> createListUsersResponse = FrontController.mainLoopController(listUsersRequest);
-        String createListUsersStatus = createListUsersResponse.get("status");
-        System.out.println("status list users: " + createListUsersStatus + "\n");
-        System.out.println("Users: " + createListUsersResponse.get("message") + "\n");
+        HashMap<String, String> listUsersResponse = FrontController.mainLoopController(listUsersRequest);
+        String listUsersStatus = listUsersResponse.get("status");
+        System.out.println("status list users: " + listUsersStatus + "\n");
+        System.out.println("Users: " + listUsersResponse.get("message") + "\n");
 
-        return createListUsersStatus;
+        return listUsersStatus;
     }
 
     public static String listEnabledUsers(Scanner reader) {
         HashMap<String, String> listEnabledUsersRequest = new HashMap<>();
         listEnabledUsersRequest.put("operation", "listEnabledUsers");
 
-        HashMap<String, String> createListEnabledUsersResponse = FrontController.mainLoopController(listEnabledUsersRequest);
-        String createListEnabledUsersStatus = createListEnabledUsersResponse.get("status");
-        System.out.println("status list enabled users: " + createListEnabledUsersStatus + "\n");
-        System.out.println("Enabled users: " + createListEnabledUsersResponse.get("message") + "\n");
+        HashMap<String, String> listEnabledUsersResponse = FrontController.mainLoopController(listEnabledUsersRequest);
+        String listEnabledUsersStatus = listEnabledUsersResponse.get("status");
+        System.out.println("status list enabled users: " + listEnabledUsersStatus + "\n");
+        System.out.println("Enabled users: " + listEnabledUsersResponse.get("message") + "\n");
 
-        return createListEnabledUsersStatus;
+        return listEnabledUsersStatus;
     }
 
 
@@ -244,24 +267,36 @@ public class IOView {
         HashMap<String, String> listLendingRequest = new HashMap<>();
         listLendingRequest.put("operation", "listLendings");
 
-        HashMap<String, String> createListLendingsResponse = FrontController.mainLoopController(listLendingRequest);
-        String createListLendingsStatus = createListLendingsResponse.get("status");
-        System.out.println("status list lendings: " + createListLendingsStatus + "\n");
-        System.out.println("Lendings: " + createListLendingsResponse.get("message") + "\n");
+        HashMap<String, String> listLendingsResponse = FrontController.mainLoopController(listLendingRequest);
+        String listLendingsStatus = listLendingsResponse.get("status");
+        System.out.println("status list lendings: " + listLendingsStatus + "\n");
+        System.out.println("Lendings: " + listLendingsResponse.get("message") + "\n");
 
-        return createListLendingsStatus;
+        return listLendingsStatus;
+    }
+
+    public static String listAvailableEjemplares(Scanner reader) {
+        HashMap<String, String> listAvailableEjemplaresRequest = new HashMap<>();
+        listAvailableEjemplaresRequest.put("operation", "listAvailableEjemplares");
+
+        HashMap<String, String> listAvailableEjemplaresResponse = FrontController.mainLoopController(listAvailableEjemplaresRequest);
+        String listAvailableEjemplaresStatus = listAvailableEjemplaresResponse.get("status");
+        System.out.println("status list available ejemplares: " + listAvailableEjemplaresStatus + "\n");
+        System.out.println("Available ejemplares: " + listAvailableEjemplaresResponse.get("message") + "\n");
+
+        return listAvailableEjemplaresStatus;
     }
 
     public static String listEjemplares(Scanner reader) {
         HashMap<String, String> listItemsRequest = new HashMap<>();
         listItemsRequest.put("operation", "listItems");
 
-        HashMap<String, String> createListEjemplaresResponse = FrontController.mainLoopController(listItemsRequest);
-        String createListEjemplaresStatus = createListEjemplaresResponse.get("status");
-        System.out.println("status list items: " + createListEjemplaresStatus + "\n");
-        System.out.println("Items: " + createListEjemplaresResponse.get("message") + "\n");
+        HashMap<String, String> listEjemplaresResponse = FrontController.mainLoopController(listItemsRequest);
+        String listEjemplaresStatus = listEjemplaresResponse.get("status");
+        System.out.println("status list ejemplares: " + listEjemplaresStatus + "\n");
+        System.out.println("ejemplares: " + listEjemplaresResponse.get("message") + "\n");
 
-        return createListEjemplaresStatus;
+        return listEjemplaresStatus;
 
     }
 

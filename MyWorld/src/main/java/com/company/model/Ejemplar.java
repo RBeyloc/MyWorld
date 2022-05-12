@@ -20,6 +20,15 @@ public class Ejemplar {
 
     }
 
+    public Ejemplar (String itemTitle, String author, boolean availability){
+        this.ejemplarTitle = itemTitle;
+        this.author = author;
+        this.dateOfAdquisition = new Date();
+        this.sku = UUID.randomUUID();
+        this.available = availability;
+
+    }
+
     public UUID getSku() {
         return sku;
     }
