@@ -52,7 +52,7 @@ public class UserController {
     }
 
     public static HashMap<String, String> listEnabledUsers() {
-        String enabledUserList = Utilities.listEnabledUsersToString(users);
+        String enabledUserList = UserService.listEnabledUsersToString(users);
 
         HashMap<String, String> listUsersResponse = new HashMap<>();
         listUsersResponse.put("response", "listEnabledUsersResponse");
@@ -65,8 +65,6 @@ public class UserController {
         }
         return listUsersResponse;
     }
-
-
 
     public static HashMap<String, String> checkUserEnabledByUUID(HashMap<String, String> dataToCheckUser) {
         UUID uuid = UUID.fromString(dataToCheckUser.get("uuid"));

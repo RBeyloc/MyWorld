@@ -18,8 +18,8 @@ public class FrontController {
         else if (request.get("operation").equals( "createItem")) response = EjemplarController.createEjemplar(request);
         else if (request.get("operation").equals( "listLendings")) response = LendingController.listLendings();
         else if (request.get("operation").equals( "listUsers")) response = UserController.listUsers();
-        else if (request.get("operation").equals( "listItems")) response = EjemplarController.listItems();
         else if (request.get("operation").equals( "listEnabledUsers")) response = UserController.listEnabledUsers();
+        else if (request.get("operation").equals( "listItems")) response = EjemplarController.listItems();
         else if (request.get("operation").equals( "checkUserEnabledByUUID")) response = UserController.checkUserEnabledByUUID(request);
         else if (request.get("operation").equals( "listAvailableEjemplares")) response = EjemplarController.listAvailableEjemplares();
         else if (request.get("operation").equals( "checkEjemplarAvailableByUUID")) response = EjemplarController.checkEjemplarAvailableByUUID(request);

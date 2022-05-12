@@ -79,6 +79,9 @@ public class IOView {
             } else if (command.equals("listUsers")) {
                 //call-operation to list users
                 listUsers(reader);
+            } else if (command.equals("listEnabledUsers")) {
+                //call-operation to list enabled users to borrow books
+                listEnabledUsers(reader);
             } else System.out.println("Unknown command");
         }
         releaseLoopView(reader);
@@ -123,8 +126,6 @@ public class IOView {
         releaseLoopView(reader);
     }
 
-
-
     public static String createUser(Scanner reader) {
         //Let s introduce data to create a User
         String name = Utilities.ask(reader, "Name?");
@@ -152,29 +153,6 @@ public class IOView {
         return createUserStatus;
     }
 
-    private static String createLending(Scanner reader) {
-        //Let s introduce data to create a Lending
-        listUsers(reader);
-        String userId = Utilities.ask(reader, "User Id?");
-        // TODO check user exists and is ENABLED to get a book; if not exit or ask again? separate method
-        listEjemplares(reader);
-        String ejemplarId = Utilities.ask(reader, "Ejemplar Id?");
-        // TODO check if ejemplar exists and is ENABLED to be lend; if no exit or ask again? separate method
-        HashMap<String, String> createLendingRequest = new HashMap<>();
-
-        //fill createLending request data hashmap object
-        createLendingRequest.put("operation", "createLending");
-        createLendingRequest.put("userId", userId);
-        createLendingRequest.put("ejemplarId", ejemplarId);
-
-        //send data to controller and get the createLending response
-        HashMap<String, String> createLendingResponse = FrontController.mainLoopController(createLendingRequest);
-        String createLendingStatus = createLendingResponse.get("status");
-        System.out.println("status lending: " + createLendingStatus + "\n");
-
-        return createLendingStatus;
-    }
-
     public static String createItem(Scanner reader) {
         //Let s introduce data to create a User
         String title = Utilities.ask(reader, "Title?");
@@ -195,11 +173,53 @@ public class IOView {
 
     }
 
-    private static String listUsers(Scanner reader) {
-        HashMap<String, String> createUsersRequest = new HashMap<>();
-        createUsersRequest.put("operation", "listUsers");
+    public static String createLending(Scanner reader) {
+        String userId = "";
+        while (true) {
+            System.out.println("Choose and write one of users Id (Quit to scape):\n");
+            listEnabledUsers(reader);
+            String command = Utilities.ask(reader, "User Id?");
+            if (command.equals("Quit")) {
+                userId = "Quit";
+                break;
+            } else if(checkUserExistAndEnabled(reader, userId)) {
+                userId = command;
+            }
+        }
 
-        HashMap<String, String> createListUsersResponse = FrontController.mainLoopController(createUsersRequest);
+
+
+
+        listEjemplares(reader);
+        String ejemplarId = Utilities.ask(reader, "Ejemplar Id?");
+        // TODO check if ejemplar exists and is ENABLED to be lend; if no exit or ask again? separate method
+        HashMap<String, String> createLendingRequest = new HashMap<>();
+
+        //fill createLending request data hashmap object
+        createLendingRequest.put("operation", "createLending");
+        createLendingRequest.put("userId", userId);
+        createLendingRequest.put("ejemplarId", ejemplarId);
+
+        //send data to controller and get the createLending response
+        HashMap<String, String> createLendingResponse = FrontController.mainLoopController(createLendingRequest);
+        String createLendingStatus = createLendingResponse.get("status");
+        System.out.println("status lending: " + createLendingStatus + "\n");
+
+        return createLendingStatus;
+    }
+
+    public static boolean checkUserExistAndEnabled(Scanner reader, String userId) {
+        boolean checked = true;
+        // TODO check user exists and is ENABLED to get a book; if not exit or ask again? separate method
+        return checked;
+    }
+
+
+    public static String listUsers(Scanner reader) {
+        HashMap<String, String> listUsersRequest = new HashMap<>();
+        listUsersRequest.put("operation", "listUsers");
+
+        HashMap<String, String> createListUsersResponse = FrontController.mainLoopController(listUsersRequest);
         String createListUsersStatus = createListUsersResponse.get("status");
         System.out.println("status list users: " + createListUsersStatus + "\n");
         System.out.println("Users: " + createListUsersResponse.get("message") + "\n");
@@ -207,12 +227,24 @@ public class IOView {
         return createListUsersStatus;
     }
 
+    public static String listEnabledUsers(Scanner reader) {
+        HashMap<String, String> listEnabledUsersRequest = new HashMap<>();
+        listEnabledUsersRequest.put("operation", "listEnabledUsers");
 
-    private static String listLendings(Scanner reader) {
-        HashMap<String, String> createLendingRequest = new HashMap<>();
-        createLendingRequest.put("operation", "listLendings");
+        HashMap<String, String> createListEnabledUsersResponse = FrontController.mainLoopController(listEnabledUsersRequest);
+        String createListEnabledUsersStatus = createListEnabledUsersResponse.get("status");
+        System.out.println("status list enabled users: " + createListEnabledUsersStatus + "\n");
+        System.out.println("Enabled users: " + createListEnabledUsersResponse.get("message") + "\n");
 
-        HashMap<String, String> createListLendingsResponse = FrontController.mainLoopController(createLendingRequest);
+        return createListEnabledUsersStatus;
+    }
+
+
+    public static String listLendings(Scanner reader) {
+        HashMap<String, String> listLendingRequest = new HashMap<>();
+        listLendingRequest.put("operation", "listLendings");
+
+        HashMap<String, String> createListLendingsResponse = FrontController.mainLoopController(listLendingRequest);
         String createListLendingsStatus = createListLendingsResponse.get("status");
         System.out.println("status list lendings: " + createListLendingsStatus + "\n");
         System.out.println("Lendings: " + createListLendingsResponse.get("message") + "\n");
@@ -220,11 +252,11 @@ public class IOView {
         return createListLendingsStatus;
     }
 
-    private static String listEjemplares(Scanner reader) {
-        HashMap<String, String> createItemsRequest = new HashMap<>();
-        createItemsRequest.put("operation", "listItems");
+    public static String listEjemplares(Scanner reader) {
+        HashMap<String, String> listItemsRequest = new HashMap<>();
+        listItemsRequest.put("operation", "listItems");
 
-        HashMap<String, String> createListEjemplaresResponse = FrontController.mainLoopController(createItemsRequest);
+        HashMap<String, String> createListEjemplaresResponse = FrontController.mainLoopController(listItemsRequest);
         String createListEjemplaresStatus = createListEjemplaresResponse.get("status");
         System.out.println("status list items: " + createListEjemplaresStatus + "\n");
         System.out.println("Items: " + createListEjemplaresResponse.get("message") + "\n");

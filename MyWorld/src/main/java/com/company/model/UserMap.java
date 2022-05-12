@@ -29,7 +29,7 @@ public class UserMap {
     }
 
     public HashMap<String, User> listEnabledUsers() {
-        HashMap<String, User> activeUsersMap = null;
+        HashMap<String, User> activeUsersMap = new HashMap<String, User>();
         for (User user : this.UserList.values()) {
             if (user.getStatus().equals("enabled")) {
                 activeUsersMap.put(String.valueOf(user.getIdNumber()), user);
