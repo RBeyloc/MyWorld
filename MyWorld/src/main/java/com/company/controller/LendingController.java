@@ -1,6 +1,7 @@
 package com.company.controller;
 
 import com.company.model.*;
+import com.company.service.EjemplarService;
 import com.company.service.UserService;
 
 import java.util.HashMap;
@@ -25,8 +26,8 @@ public class LendingController {
         // Getting user object by id and ejemplar object by id
         if (!UserService.checkUserEnabledByUUID(users, UUID.fromString(userId))) {
             createLendingResponse.put("message", "User don't exists or is not enabled to borrow.");
-       /* } else if (!ejemplares.checkEjemplarAvailableByUID(UUID.fromString(ejemplarId))) {
-            createLendingResponse.put("message", "Ejemplar don't exists or is not available to be lent.");*/
+        } else if (!EjemplarService.checkEjemplarAvailableByUUID(ejemplares, UUID.fromString(ejemplarId))) {
+            createLendingResponse.put("message", "Ejemplar don't exists or is not available to be lent.");
         } else {
             // Get object user and ejemplar
             User user = users.getUserById(userId);
@@ -64,18 +65,32 @@ public class LendingController {
         return listLendingsResponse;
     }
 
-    /*public static HashMap<String, String> makeDevolution(HashMap<String, String> request){
+    public static HashMap<String, String> makeDevolution(HashMap<String, String> request){
         String ejemplarUUID = request.get("ejemplarUUID");
-        Ejemplar ejemplar = ejemplares.getEjemplarByUUID(ejemplarUUID);
-        Lending lending = lendings.getLastLendingByEjemplar(ejemplar);
-        boolean statusOperation = lending.devolution();
+        Lending lending = null;
+        Ejemplar ejemplar = null;
+        boolean statusOperation = false;
+        ejemplar = ejemplares.findBySku(UUID.fromString(ejemplarUUID));
+
+        if(ejemplar != null) {
+            lending = lendings.getLastLendingByEjemplar(ejemplar);
+        }
+        if(lending != null) {
+            statusOperation = lending.devolution();
+        }
 
         HashMap<String, String> devolutionResponse = new HashMap<>();
-        devolutionResponse.put("response", "make devolution");
+        devolutionResponse.put("status", "failed");
+        devolutionResponse.put("response", "Devolution failed");
 
-        if (statusOperation) devolutionResponse.put("status", "returned");
-        else devolutionResponse.put("status", "operation failed");
-
+        if(ejemplar == null) {
+            devolutionResponse.put("response", "Can not retrieve the book reference");
+        } else if (lending == null) {
+            devolutionResponse.put("response", "Can not retrieve the last lending reference");
+        } else if (statusOperation) {
+            devolutionResponse.put("status", "success");
+            devolutionResponse.put("status", "Devolution succeded");
+        }
         return devolutionResponse;
-    }*/
+    }
 }
