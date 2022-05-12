@@ -1,5 +1,6 @@
 package com.company.model;
 
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -31,6 +32,25 @@ public class EjemplarList {
             }
         }
         return onlyAvailable;
+    }
+
+    public boolean existsEjemplarUUID(UUID ejemplarUUID){
+        for (Map.Entry<UUID, Ejemplar> entry : ejemplares.entrySet()) {
+            if (entry.getValue().getSku().equals(ejemplarUUID)){
+               return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isEjemplarAvaiblable(UUID ejemplarUUID){
+        for (Map.Entry<UUID, Ejemplar> entry : ejemplares.entrySet()) {
+            if (entry.getValue().getSku().equals(ejemplarUUID) && entry.getValue().isAvailable()){
+                return true;
+            }
+        }
+        return false;
+
     }
 
     public Ejemplar findBySku(UUID sku){
