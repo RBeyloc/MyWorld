@@ -36,7 +36,7 @@ public class Utilities {
     public static Connection DBEstablishConnection () throws SQLException {
         String stringURLConnection = "jdbc:h2:tcp://localhost/../../../Users/Alumne_mati1/h2/library";
         String username = "ricard";
-        String password = "RBR3410";
+        String password = "RBR 410";
         Connection connection = DriverManager.getConnection(stringURLConnection, username, password);
         return connection;
     }

@@ -4,6 +4,8 @@ import com.company.model.Ejemplar;
 import com.company.model.EjemplarList;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class EjemplarService {
 
@@ -16,6 +18,15 @@ public class EjemplarService {
 
         }
         return itemsList;
+    }
+
+    public static boolean checkEjemplarAvailableByUUID(EjemplarList lista, UUID ejemplarUUID){
+        for (Map.Entry<UUID, Ejemplar> entry : lista.getEjemplares().entrySet()) {
+            if (entry.getValue().getSku().equals(ejemplarUUID) && entry.getValue().isAvailable()){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

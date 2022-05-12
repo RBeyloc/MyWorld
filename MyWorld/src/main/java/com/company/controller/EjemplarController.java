@@ -4,6 +4,7 @@ import com.company.model.Ejemplar;
 import com.company.model.EjemplarList;
 import com.company.model.User;
 import com.company.service.EjemplarService;
+import com.company.service.UserService;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -62,6 +63,23 @@ public class EjemplarController {
 
     public static EjemplarList getEjemplares() {
         return lista;
+    }
+
+
+    public static HashMap<String, String> checkEjemplarAvailableByUUID(HashMap<String, String> dataToCheckEjemplar){
+        UUID uuid = UUID.fromString(dataToCheckEjemplar.get("uuid"));
+
+        HashMap<String, String> response = new HashMap<>();
+        response.put("response", "checkEjemplarEnabledByUUID");
+        if (EjemplarService.checkEjemplarAvailableByUUID(lista, uuid)) {
+            response.put("status", "Book available");
+            response.put("message", String.valueOf(true));
+        } else {
+            response.put("status", "Book not available");
+            response.put("message", String.valueOf(false));
+        }
+        return response;
+
     }
 
 }
