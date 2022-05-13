@@ -67,10 +67,17 @@ public class EjemplarController {
 
 
     public static HashMap<String, String> checkEjemplarAvailableByUUID(HashMap<String, String> dataToCheckEjemplar){
-        UUID uuid = UUID.fromString(dataToCheckEjemplar.get("uuid"));
+        boolean isChecked;
+        try {
+            UUID uuid = UUID.fromString(dataToCheckEjemplar.get("uuid"));
+            isChecked = EjemplarService.checkEjemplarAvailableByUUID(lista, uuid);
+        }
+        catch(Exception e) {
+            isChecked = false;
+        }
         HashMap<String, String> response = new HashMap<>();
         response.put("response", "checkEjemplarEnabledByUUID");
-        if (EjemplarService.checkEjemplarAvailableByUUID(lista, uuid)) {
+        if (isChecked) {
             response.put("status", "Book available");
             response.put("message", String.valueOf(true));
         } else {

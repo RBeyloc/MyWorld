@@ -67,10 +67,18 @@ public class UserController {
     }
 
     public static HashMap<String, String> checkUserEnabledByUUID(HashMap<String, String> dataToCheckUser) {
-        UUID uuid = UUID.fromString(dataToCheckUser.get("uuid"));
+        boolean isChecked;
+        try {
+            UUID uuid = UUID.fromString(dataToCheckUser.get("uuid"));
+            isChecked = UserService.checkUserEnabledByUUID(users, uuid);
+        }
+        catch(Exception e) {
+            isChecked = false;
+        }
+
         HashMap<String, String> response = new HashMap<>();
         response.put("response", "checkUserEnabledByUUID");
-        if (UserService.checkUserEnabledByUUID(users, uuid)) {
+        if (isChecked) {
             response.put("status", "Enabled user");
             response.put("message", String.valueOf(true));
         } else {
