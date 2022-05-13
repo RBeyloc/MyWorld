@@ -26,7 +26,7 @@ public class UserTest {
     public static void createFakeUsers(ArrayList<User> usersTest) {
 
         User newUser1 = new User("Giselle", "Morales", "1987-07-30", "Muntaner 555, 08032, Barcelona", "gmorales@gmail.com","619111435");
-        User newUser2 = new User("Thomas", "Edison", "1982-07-30", "Carrer del Comte de Sert, 25, 08035, Barcelona", "Thomas@gmail.com", "653111345");
+        User newUser2 = new User("Thomas", "Edison", "1982-07-30", "Carrer del Comte de Sert, 25, 08035, Barcelona", "Thomas@gmail.com", "653111345", "disabled");
         User newUser3 = new User("Susan", "Lane", "1977-07-30", "Paseo de Gracia, 43, 08007 Barcelona", "lane@msn.com", "932 160 306");
         User newUser4 = new User("Marta", "Gross", "1980-07-30", "Paseo de Gracia, 92, 08008 Barcelona", "Martha.L@hotmail.com", "932 14 25 76");
         usersTest.add(newUser1);
