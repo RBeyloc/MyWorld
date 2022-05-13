@@ -68,7 +68,6 @@ public class EjemplarController {
 
     public static HashMap<String, String> checkEjemplarAvailableByUUID(HashMap<String, String> dataToCheckEjemplar){
         UUID uuid = UUID.fromString(dataToCheckEjemplar.get("uuid"));
-
         HashMap<String, String> response = new HashMap<>();
         response.put("response", "checkEjemplarEnabledByUUID");
         if (EjemplarService.checkEjemplarAvailableByUUID(lista, uuid)) {

@@ -100,6 +100,8 @@ public class IOView {
                 createItem(reader);
             } else if (command.equalsIgnoreCase("listItems")){
                 listEjemplares(reader);
+            } else if (command.equalsIgnoreCase("listAvailableEjemplares")) {
+                listAvailableEjemplares(reader);
             } else System.out.println("Unknown command");
         }
         releaseLoopView(reader);
@@ -229,7 +231,7 @@ public class IOView {
 
     public static boolean checkEjemplarAvailableByUUID(Scanner reader,String ejemplarId) {
         HashMap<String, String> checkEjemplarAvailableByUUIDRequest = new HashMap<>();
-        checkEjemplarAvailableByUUIDRequest.put("operation", "checkUserEnabledByUUID");
+        checkEjemplarAvailableByUUIDRequest.put("operation", "checkEjemplarAvailableByUUID");
         checkEjemplarAvailableByUUIDRequest.put("uuid", ejemplarId);
         HashMap<String, String> checkEjemplarAvailableByUUIDResponse = FrontController.mainLoopController(checkEjemplarAvailableByUUIDRequest);
         String checkEjemplarAvailableByUUIDStatus = checkEjemplarAvailableByUUIDResponse.get("status");
