@@ -34,7 +34,7 @@ public class LendingController {
                 createLendingResponse.put("message", "Failure in retrieving user or ejemplar.");
             } else {
                 Lending newLending = new Lending(userUUID, ejemplarUUID);
-                if (!LendingServide.createLending(newLending)) {
+                if (!LendingService.createLending(newLending)) {
                     createLendingResponse.put("message", "Failure in saving new lending.");
                 } else {
                     user.setStatus("disabled");
@@ -69,7 +69,8 @@ public class LendingController {
         ejemplar = ejemplares.findBySku(UUID.fromString(ejemplarUUID));
 
         if(ejemplar != null) {
-            lending = lendings.getLastLendingByEjemplar(ejemplar);
+            LendingList lendings = new LendingList();
+            lending = getLastLendingByEjemplar(ejemplar);
         }
         if(lending != null) {
             statusOperation = lending.devolution();
