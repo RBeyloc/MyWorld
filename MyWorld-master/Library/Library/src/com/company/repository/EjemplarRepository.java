@@ -64,9 +64,9 @@ public class EjemplarRepository {
         EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
         EntityTransaction transaction = manager.getTransaction();
         transaction.begin();
-
-        List<Ejemplar> resultsEjemplarFound = manager.createQuery("SELECT ejemplar FROM Ejemplar ejemplar WHERE ejemplar.available = true")
-                .getResultList();
+        String ejemplarUUID = ("a197d83650844de8a604354a18dd1c55");
+        List<Ejemplar> resultsEjemplarFound = manager.createQuery("SELECT ejemplar FROM Ejemplar ejemplar WHERE ejemplar.UUID LIKE :uuid")
+                .setParameter("uuid", ejemplarUUID).getResultList();
 
         transaction.commit();
         manager.close();
