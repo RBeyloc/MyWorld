@@ -2,9 +2,15 @@ package com.company.model;
 
 import java.util.Date;
 import java.util.UUID;
+import javax.persistence.*;
+import java.util.Objects;
 
+@Entity
+@Table(name = "EJEMPLAR_TABLE")
 public class Ejemplar {
 
+    @Id
+    @Column(columnDefinition = "BINARY(16)")
     private final UUID sku;
     private String ejemplarTitle;
     private String author;
