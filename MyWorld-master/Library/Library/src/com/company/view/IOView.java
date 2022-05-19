@@ -295,8 +295,7 @@ public class IOView {
 
         HashMap<String, String> listEjemplaresResponse = FrontController.mainLoopController(listItemsRequest);
         String listEjemplaresStatus = listEjemplaresResponse.get("status");
-        System.out.println("status list ejemplares: " + listEjemplaresStatus + "\n");
-        System.out.println("ejemplares: " + listEjemplaresResponse.get("message") + "\n");
+        System.out.println("All items in the Library: \n" + listEjemplaresResponse.get("message") + "\n");
 
         return listEjemplaresStatus;
 

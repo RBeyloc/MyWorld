@@ -3,10 +3,13 @@ package com.company.controller;
 import com.company.model.Ejemplar;
 import com.company.model.EjemplarList;
 import com.company.model.User;
+import com.company.repository.EjemplarRepository;
 import com.company.service.EjemplarService;
 import com.company.service.UserService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class EjemplarController {
@@ -20,6 +23,7 @@ public class EjemplarController {
         Ejemplar ejemplarCreated = new Ejemplar(title, author);
 
         boolean statusOperation = lista.add(ejemplarCreated);
+        EjemplarService.create(ejemplarCreated);
 
         HashMap<String, String> createItemResponse = new HashMap<>();
         createItemResponse.put("response", "createItemResponse");
@@ -31,12 +35,21 @@ public class EjemplarController {
     }
 
     public static HashMap<String, String> listItems() {
-        String itemsList = lista.toString();
+
+        List<Ejemplar> allEjemplares = EjemplarRepository.getAllEjemplars();
+
+        String ejemplaresList = "";
+
+        for (Ejemplar ejemplar : allEjemplares) {
+            ejemplaresList += ejemplar.toString() + "\n";
+        }
+
+
         HashMap<String, String> listItemsResponse = new HashMap<>();
         listItemsResponse.put("response", "listUsersResponse");
-        if(!itemsList.equals("Items Map:\n")) {
+        if(!ejemplaresList.equals("Items Map:\n")) {
             listItemsResponse.put("status", "List exists");
-            listItemsResponse.put("message", itemsList);
+            listItemsResponse.put("message", ejemplaresList);
         } else {
             listItemsResponse.put("status", "List doesnt's exists");
             listItemsResponse.put("message", "No items");
@@ -46,13 +59,20 @@ public class EjemplarController {
 
     public static HashMap<String, String> listAvailableEjemplares() {
 
-        String itemsList = EjemplarService.listAvailableEjemplaresToString(lista);
+        List<Ejemplar> allEjemplares = EjemplarRepository.getAvailableEjemplars();
+
+        String ejemplaresList = "";
+
+        for (Ejemplar ejemplar : allEjemplares) {
+            ejemplaresList += ejemplar.toString() + "\n";
+        }
+
 
         HashMap<String, String> listItemsResponse = new HashMap<>();
         listItemsResponse.put("response", "listUsersResponse");
-        if(!itemsList.equals("Items Available:\n")) {
+        if(!ejemplaresList.equals("Items Available:\n")) {
             listItemsResponse.put("status", "List exists");
-            listItemsResponse.put("message", itemsList);
+            listItemsResponse.put("message", ejemplaresList);
         } else {
             listItemsResponse.put("status", "List doesnt's exists");
             listItemsResponse.put("message", "No items");
@@ -60,17 +80,11 @@ public class EjemplarController {
         return listItemsResponse;
     }
 
-
-    public static EjemplarList getEjemplares() {
-        return lista;
-    }
-
-
     public static HashMap<String, String> checkEjemplarAvailableByUUID(HashMap<String, String> dataToCheckEjemplar){
         boolean isChecked;
         try {
             UUID uuid = UUID.fromString(dataToCheckEjemplar.get("uuid"));
-            isChecked = EjemplarService.checkEjemplarAvailableByUUID(lista, uuid);
+            isChecked = EjemplarService.checkEjemplarAvailableByUUID(uuid);
         }
         catch(Exception e) {
             isChecked = false;
