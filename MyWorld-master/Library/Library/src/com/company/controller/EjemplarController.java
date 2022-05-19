@@ -19,24 +19,25 @@ public class EjemplarController {
 
         Ejemplar ejemplarCreated = new Ejemplar(title, author);
 
-        boolean statusOperation = lista.add(ejemplarCreated);
+        Ejemplar statusOperation = EjemplarService.create(ejemplarCreated);
 
         HashMap<String, String> createItemResponse = new HashMap<>();
         createItemResponse.put("response", "createItemResponse");
 
-        if (statusOperation) createItemResponse.put("status", "created");
+        if (statusOperation != null) createItemResponse.put("status", "created");
         else createItemResponse.put("status", "not created");
 
         return createItemResponse;
     }
 
     public static HashMap<String, String> listItems() {
-        String itemsList = lista.toString();
+        String ejemplarsList = EjemplarService.getAllEjemplars().toString();
+
         HashMap<String, String> listItemsResponse = new HashMap<>();
         listItemsResponse.put("response", "listUsersResponse");
-        if(!itemsList.equals("Items Map:\n")) {
+        if(!ejemplarsList.equals("Items Map:\n")) {
             listItemsResponse.put("status", "List exists");
-            listItemsResponse.put("message", itemsList);
+            listItemsResponse.put("message", ejemplarsList);
         } else {
             listItemsResponse.put("status", "List doesnt's exists");
             listItemsResponse.put("message", "No items");

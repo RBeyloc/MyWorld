@@ -23,8 +23,8 @@ public class UserService {
         return enabledUserList;
     }
 
-    public static void create(User userToSave) {
-        UserRepository.create(userToSave);
+    public static User create(User userToSave) {
+        return UserRepository.create(userToSave);
     }
 
     public static List<User> getAllUsers() {

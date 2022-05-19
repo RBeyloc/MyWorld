@@ -1,16 +1,16 @@
 package com.company.repository;
 
-
-import com.company.model.User;
+import com.company.model.Ejemplar;
 import com.company.utils.EntityManagerFactoryUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.util.List;
+import java.util.UUID;
 
-public class UserRepository {
+public class EjemplarRepository {
 
-    public static User create(User userToSave){
+    public static Ejemplar create(Ejemplar ejemplarToSave){
         //create a manager to do all the CRUD operations with student object
         //I can create manager because I created EntityManagerFactoryUtils
         EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
@@ -19,45 +19,39 @@ public class UserRepository {
         //let s start with begin the operations, thanks to transaction object
         transaction.begin();
         //prepares the operation to be done
-        manager.persist(userToSave);
+        manager.persist(ejemplarToSave);
         //this operation WRITES the object on the actual table
         transaction.commit();
         manager.close();
-        return userToSave;
+        return ejemplarToSave;
     }
 
-    public static User getUserByUUID(String userEmail){
+    public static Ejemplar getEjemplarByUUID(UUID ejemplarUUID){
 
         EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
         EntityTransaction transaction = manager.getTransaction();
         transaction.begin();
 
-        List<User> resultsUserFound = manager.createQuery("SELECT user FROM User user WHERE user.email LIKE :email")
-                .setParameter("email", userEmail).getResultList();
+        Ejemplar ejemplarFound = null;
+        ejemplarFound = manager.find(Ejemplar.class, ejemplarUUID);
 
         transaction.commit();
         manager.close();
 
-        User userFound = null;
-        if ( resultsUserFound.size() != 0 ) userFound = resultsUserFound.get(0);
-
-        return userFound;
+        return ejemplarFound;
     }
 
-    public static List<User> getAllUsers() {
+    public static List<Ejemplar> getAllEjemplars() {
         EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
         EntityTransaction transaction = manager.getTransaction();
         transaction.begin();
 
-        List<User> resultsUsersFound = manager.createQuery("SELECT user FROM User user")
-                .getResultList();
+        List<Ejemplar> resultEjemplarsFound = manager.createQuery("SELECT ejemplar FROM Ejemplar ejemplar").getResultList();
 
         transaction.commit();
         manager.close();
 
-        return resultsUsersFound;
+        return resultEjemplarsFound;
 
     }
 }
-
-
