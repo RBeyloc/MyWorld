@@ -17,12 +17,12 @@ public class Ejemplar {
     private String ejemplarTitle;
     private String author;
     private final Date dateOfAdquisition;
-    private boolean available;
+    private int available;
 
     public Ejemplar() {
         this.dateOfAdquisition = new Date();
         this.sku = UUID.randomUUID();
-        this.available = true;
+        this.available = 1;
     }
 
     public Ejemplar (String itemTitle, String author){
@@ -30,11 +30,11 @@ public class Ejemplar {
         this.author = author;
         this.dateOfAdquisition = new Date();
         this.sku = UUID.randomUUID();
-        this.available = true;
+        this.available = 1;
 
     }
 
-    public Ejemplar (String itemTitle, String author, boolean availability){
+    public Ejemplar (String itemTitle, String author, int availability){
         this.ejemplarTitle = itemTitle;
         this.author = author;
         this.dateOfAdquisition = new Date();
@@ -68,11 +68,11 @@ public class Ejemplar {
     }
 
 
-    public boolean isAvailable() {
+    public int isAvailable() {
         return available;
     }
 
-    public void setAvailable(boolean available) {
+    public void setAvailable(int available) {
         this.available = available;
     }
 

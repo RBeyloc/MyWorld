@@ -27,7 +27,7 @@ public class EjemplarList {
         HashMap<UUID, Ejemplar> onlyAvailable = new HashMap<>();
 
         for (Map.Entry<UUID, Ejemplar> entry : ejemplares.entrySet()) {
-            if (entry.getValue().isAvailable()){
+            if (entry.getValue().isAvailable() == 1){
                 onlyAvailable.put(entry.getValue().getSku(), entry.getValue());
             }
         }
@@ -45,7 +45,7 @@ public class EjemplarList {
 
     public boolean isEjemplarAvaiblable(UUID ejemplarUUID){
         for (Map.Entry<UUID, Ejemplar> entry : ejemplares.entrySet()) {
-            if (entry.getValue().getSku().equals(ejemplarUUID) && entry.getValue().isAvailable()){
+            if (entry.getValue().getSku().equals(ejemplarUUID) && entry.getValue().isAvailable() == 1){
                 return true;
             }
         }
@@ -87,9 +87,9 @@ public class EjemplarList {
         Ejemplar ejemplar01 = new Ejemplar("Around the World in 80 days", "Jules Verne");
         Ejemplar ejemplar02 = new Ejemplar("Mrs. Dalloway", "Virginia Woolf");
         Ejemplar ejemplar03 = new Ejemplar("To Kill a Mockingbird" , "Harper Lee");
-        Ejemplar ejemplar04 =  new Ejemplar("Cumbres Borrascosas" , "Emily Bronte", false);
+        Ejemplar ejemplar04 =  new Ejemplar("Cumbres Borrascosas" , "Emily Bronte", 0);
         Ejemplar ejemplar05 =  new Ejemplar("Moby Dick" , "Herman Melville");
-        Ejemplar ejemplar06 =  new Ejemplar("Anna Karenina" , "Leon Tolstoi", false);
+        Ejemplar ejemplar06 =  new Ejemplar("Anna Karenina" , "Leon Tolstoi", 0);
 
 
         ejemplares.put(ejemplar01.getSku(), ejemplar01);

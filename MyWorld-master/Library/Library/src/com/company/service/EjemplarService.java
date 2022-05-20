@@ -26,7 +26,7 @@ public class EjemplarService {
 
     public static boolean checkEjemplarAvailableByUUID(EjemplarList lista, UUID ejemplarUUID){
         for (Map.Entry<UUID, Ejemplar> entry : lista.getEjemplares().entrySet()) {
-            if (entry.getValue().getSku().equals(ejemplarUUID) && entry.getValue().isAvailable()){
+            if (entry.getValue().getSku().equals(ejemplarUUID) && entry.getValue().isAvailable() == 1){
                 return true;
             }
         }
