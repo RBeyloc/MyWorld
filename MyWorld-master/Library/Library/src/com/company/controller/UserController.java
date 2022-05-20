@@ -26,13 +26,12 @@ public class UserController {
         User createdUser = new User(name, surname, birthdate, address, email, phoneNumber);
 
         //Let s add this new User object to the main (and just one) array
-        boolean statusOperation = users.addUser(createdUser);
-        UserService.create(createdUser);
+        User statusOperation = UserService.create(createdUser);
 
         HashMap<String, String> createUserResponse = new HashMap<>();
         createUserResponse.put("response", "createUserResponse");
 
-        if (statusOperation) createUserResponse.put("status", "created");
+        if (statusOperation != null) createUserResponse.put("status", "created");
         else createUserResponse.put("status", "not created");
 
         return createUserResponse;
@@ -40,7 +39,7 @@ public class UserController {
 
     public static HashMap<String, String> listUsers() {
         String usersList = UserService.getAllUsers().toString();
-        //String usersList = users.toString();
+
         HashMap<String, String> listUsersResponse = new HashMap<>();
         listUsersResponse.put("response", "listUsersResponse");
         if (!usersList.equals("Users Map:\n")) {

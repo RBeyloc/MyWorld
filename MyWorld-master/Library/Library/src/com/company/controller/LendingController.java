@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class LendingController {
 
-   /* public static HashMap<String, String> createLending(HashMap<String, String> request) {
+    /*public static HashMap<String, String> createLending(HashMap<String, String> request) {
         // Unpacking data
         UUID userUUID = UUID.fromString(request.get("userId"));
         UUID ejemplarUUID = UUID.fromString(request.get("ejemplarId"));
@@ -45,15 +45,16 @@ public class LendingController {
             }
         }
         return createLendingResponse;
-    }
+    }*/
 
     public static HashMap<String, String> listLendings() {
-        String lendingsList = lendings.toString();
+        LendingList lendingList = new LendingList();
+        String lendingListStringyfied = lendingList.toString();
         HashMap<String, String> listLendingsResponse = new HashMap<>();
         listLendingsResponse.put("response", "listLendingsResponse");
-        if (!lendingsList.equals("Lendings Map:\n")) {
+        if (!lendingListStringyfied.equals("Lendings Map:\n")) {
             listLendingsResponse.put("status", "List exists");
-            listLendingsResponse.put("message", lendingsList);
+            listLendingsResponse.put("message", lendingListStringyfied);
         } else {
             listLendingsResponse.put("status", "List doesnt's exists");
             listLendingsResponse.put("message", "No users");
@@ -61,7 +62,7 @@ public class LendingController {
         return listLendingsResponse;
     }
 
-    public static HashMap<String, String> makeDevolution(HashMap<String, String> request){
+    /* public static HashMap<String, String> makeDevolution(HashMap<String, String> request){
         String ejemplarUUID = request.get("ejemplarUUID");
         Lending lending = null;
         Ejemplar ejemplar = null;
@@ -89,5 +90,5 @@ public class LendingController {
             devolutionResponse.put("status", "Devolution succeded");
         }
         return devolutionResponse;
-    }*/
+    } */
 }

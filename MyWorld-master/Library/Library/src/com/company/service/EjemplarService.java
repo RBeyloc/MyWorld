@@ -2,9 +2,13 @@ package com.company.service;
 
 import com.company.model.Ejemplar;
 import com.company.model.EjemplarList;
+import com.company.model.Lending;
 import com.company.repository.EjemplarRepository;
+import com.company.repository.LendingRepository;
 
-
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class EjemplarService {
@@ -20,16 +24,23 @@ public class EjemplarService {
         return itemsList;
     }
 
-    public static void create(Ejemplar ejemplarToSave) {
-        EjemplarRepository.create(ejemplarToSave);
+    public static boolean checkEjemplarAvailableByUUID(EjemplarList lista, UUID ejemplarUUID){
+        for (Map.Entry<UUID, Ejemplar> entry : lista.getEjemplares().entrySet()) {
+            if (entry.getValue().getSku().equals(ejemplarUUID) && entry.getValue().isAvailable()){
+                return true;
+            }
+        }
+        return false;
     }
 
-    public static boolean checkEjemplarAvailableByUUID(UUID ejemplarUUID){
+    public static Ejemplar create(Ejemplar ejemplar) {
+        Ejemplar ejemplarCreated = EjemplarRepository.create(ejemplar);
+        return ejemplarCreated;
+    }
 
-        Ejemplar ejemplar = EjemplarRepository.getEjemplarByUUID(ejemplarUUID);
-
-        return ejemplar.isAvailable();
-
+    public static List<Ejemplar> getAllEjemplars() {
+        List<Ejemplar> resultEjemplarsFound = EjemplarRepository.getAllEjemplars();
+        return resultEjemplarsFound;
     }
 
 }

@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class UserRepository {
 
-    public static void create(User userToSave){
+    public static User create(User userToSave){
         //create a manager to do all the CRUD operations with student object
         //I can create manager because I created EntityManagerFactoryUtils
         EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
@@ -26,6 +26,7 @@ public class UserRepository {
         //this operation WRITES the object on the actual table
         transaction.commit();
         manager.close();
+        return userToSave;
     }
 
     public static User getUserByUUID(String userEmail){

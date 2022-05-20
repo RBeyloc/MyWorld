@@ -1,40 +1,55 @@
 package com.company.model;
 
+import com.company.service.LendingService;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.UUID;
+import java.util.List;
 
 public class LendingList {
 
-    private LinkedList<Lending> lendingList;
+    private List<Lending> lendingList;
 
     public LendingList() {
-        this.lendingList = new LinkedList<>();
+        this.lendingList = LendingService.getAllLendings();
     }
 
-    public LendingList(LinkedList<Lending> lendingList) {
+    public LendingList(List<Lending> lendingList) {
         this.lendingList = lendingList;
     }
 
-    public boolean addLending(Lending lending) {
-        try {
-            // this.lendingList.put(String.valueOf(lending.getLendingUuid()), lending);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public LinkedList<Lending> getLendingList() {
+    public List<Lending> getLendingList() {
         return lendingList;
     }
 
-    public void setLendingList(LinkedList<Lending> lendingList) {
+    public void setLendingList(List<Lending> lendingList) {
         this.lendingList = lendingList;
     }
 
+    @Override
+    public String toString() {
+        String lendingsList = "Lendings List:\n";
+        if (!this.lendingList.isEmpty()) {
+            for (Lending lending : this.lendingList) {
+                lendingsList += lending.toString() + "\n";
+            }
+        }
+        return lendingsList;
+    }
+
+    public List<Lending> getLendingListByEjemplar(Ejemplar ejemplarToSearch) {
+        List<Lending> ejemplarLendingsList = new ArrayList<Lending>();
+        for (Lending lending : this.lendingList) {
+            if (lending.getEjemplar().equals(ejemplarToSearch)) {
+                ejemplarLendingsList.add(lending);
+            }
+        }
+        return ejemplarLendingsList;
+    }
+
     public Lending getLastLendingByEjemplar(Ejemplar ejemplar) {
-        LinkedList<Lending> ejemplarLendingsList = this.getLendingListByEjemplar(ejemplar);
+        List<Lending> ejemplarLendingsList = this.getLendingListByEjemplar(ejemplar);
         LocalDate lastLendingDate = LocalDate.EPOCH;
         int currentPosition = 0;
         int lastLendingPosition = currentPosition;
@@ -48,24 +63,4 @@ public class LendingList {
         return ejemplarLendingsList.get(lastLendingPosition);
     }
 
-    public LinkedList<Lending> getLendingListByEjemplar(Ejemplar ejemplarToSearch) {
-        LinkedList<Lending> ejemplarLendingsList = new LinkedList<Lending>();
-        for (Lending  lending : this.lendingList) {
-            if (lending.getEjemplar().equals(ejemplarToSearch)) {
-                ejemplarLendingsList.add(lending);
-            }
-        }
-        return ejemplarLendingsList;
-    }
-
-    @Override
-    public String toString() {
-        String lendingsList = "Lendings List:\n";
-        if(!this.lendingList.isEmpty()) {
-            for(Lending lending : this.lendingList) {
-                lendingsList += lending.toString() + "\n";
-            }
-        }
-        return lendingsList;
-    }
 }

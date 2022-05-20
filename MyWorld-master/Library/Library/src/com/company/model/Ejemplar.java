@@ -1,5 +1,7 @@
 package com.company.model;
 
+import javax.persistence.*;
+
 import java.util.Date;
 import java.util.UUID;
 import javax.persistence.*;

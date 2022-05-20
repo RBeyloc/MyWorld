@@ -126,7 +126,6 @@ public class Lending {
         return this.getUser().getIdNumber();
     }
 
-
     public UUID getEjemplarID() {
         return this.getEjemplar().getSku();
     }
