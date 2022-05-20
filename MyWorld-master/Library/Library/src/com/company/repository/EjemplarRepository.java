@@ -33,8 +33,8 @@ public class EjemplarRepository {
         EntityTransaction transaction = manager.getTransaction();
         transaction.begin();
 
-        List<Ejemplar> resultsEjemplarFound = manager.createQuery("SELECT ejemplar FROM Ejemplar ejemplar WHERE ejemplar.UUID LIKE :uuid")
-                .setParameter("uuid", ejemplarUUID).getResultList();
+        List<Ejemplar> resultsEjemplarFound = manager.createQuery("SELECT ejemplar FROM Ejemplar ejemplar WHERE ejemplar.SKU LIKE :email")
+                .setParameter("email", ejemplarUUID).getResultList();
 
         transaction.commit();
         manager.close();
@@ -64,9 +64,11 @@ public class EjemplarRepository {
         EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
         EntityTransaction transaction = manager.getTransaction();
         transaction.begin();
-        String ejemplarUUID = ("a197d83650844de8a604354a18dd1c55");
-        List<Ejemplar> resultsEjemplarFound = manager.createQuery("SELECT ejemplar FROM Ejemplar ejemplar WHERE ejemplar.UUID LIKE :uuid")
-                .setParameter("uuid", ejemplarUUID).getResultList();
+
+        boolean available = true;
+
+        List<Ejemplar> resultsEjemplarFound = manager.createQuery("SELECT ejemplar FROM Ejemplar ejemplar WHERE available LIKE 1")
+                .getResultList();
 
         transaction.commit();
         manager.close();

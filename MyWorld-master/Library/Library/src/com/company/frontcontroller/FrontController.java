@@ -13,17 +13,15 @@ public class FrontController {
         HashMap<String, String> response = new HashMap<>();
         response.put("status", "error");
         //
-        if (request.get("operation").equals("createUser")) response = UserController.createUser(request);
+        if (request.get("operation").equalsIgnoreCase("createUser")) response = UserController.createUser(request);
        // else if (request.get("operation").equals( "createLending")) response = LendingController.createLending(request);
-        else if (request.get("operation").equals( "createItem")) response = EjemplarController.createEjemplar(request);
+        else if (request.get("operation").equalsIgnoreCase( "createItem")) response = EjemplarController.createEjemplar(request);
        // else if (request.get("operation").equals( "listLendings")) response = LendingController.listLendings();
-        else if (request.get("operation").equals( "listUsers")) response = UserController.listUsers();
-        else if (request.get("operation").equals( "listEnabledUsers")) response = UserController.listEnabledUsers();
-        else if (request.get("operation").equals( "listItems")) response = EjemplarController.listItems();
-        else if (request.get("operation").equals( "listAvailableEjemplares")) response = EjemplarController.listAvailableEjemplares();
-        else if (request.get("operation").equals( "checkUserEnabledByUUID")) response = UserController.checkUserEnabledByUUID(request);
-        else if (request.get("operation").equals( "listAvailableEjemplares")) response = EjemplarController.listAvailableEjemplares();
-        else if (request.get("operation").equals( "checkEjemplarAvailableByUUID")) response = EjemplarController.checkEjemplarAvailableByUUID(request);
+        else if (request.get("operation").equalsIgnoreCase( "listUsers")) response = UserController.listUsers();
+        else if (request.get("operation").equalsIgnoreCase( "listEnabledUsers")) response = UserController.listEnabledUsers();
+        else if (request.get("operation").equalsIgnoreCase( "listItems")) response = EjemplarController.listItems();
+        else if (request.get("operation").equalsIgnoreCase( "listAvailableItems")) response = EjemplarController.listAvailableEjemplares();
+        else if (request.get("operation").equalsIgnoreCase( "checkUserEnabledByUUID")) response = UserController.checkUserEnabledByUUID(request);
 
 
         System.out.println(response);

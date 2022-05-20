@@ -28,8 +28,11 @@ public class EjemplarService {
 
         Ejemplar ejemplar = EjemplarRepository.getEjemplarByUUID(ejemplarUUID);
 
-        return ejemplar.isAvailable();
-
+        if (ejemplar.isAvailable() ==1 ){
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

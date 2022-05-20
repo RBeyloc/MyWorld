@@ -27,7 +27,7 @@ public class Menu {
         //Utilities.clearConsole();
         System.out.println("1-Newitem");
         System.out.println("2-listItems");
-        System.out.println("3-listAvailableEjemplares");
+        System.out.println("3-listAvailableItems");
         System.out.println("0-Back");
     }
 

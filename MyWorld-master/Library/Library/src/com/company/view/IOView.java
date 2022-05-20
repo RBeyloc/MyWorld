@@ -27,11 +27,11 @@ public class IOView {
 
             if (command.equals("Quit")) {
                 break;
-            } else if (command.equals("test")) {
+            } else if (command.equalsIgnoreCase("test")) {
                 //We create this feature to test our soft
                 UserTest.test();
                 EjemplarTest.test();
-            } else if (command.equals("release")) {
+            } else if (command.equalsIgnoreCase("release")) {
                 //We create this feature to release our soft
                 releaseLoopView(reader);
                 break;
@@ -48,15 +48,15 @@ public class IOView {
 
             if (command.equals("Exit")) {
                 break;
-            } else if (command.equals("Users")) {
+            } else if (command.equalsIgnoreCase("Users")) {
                 //call secondary users menu-loop
                 releaseLoopUsersView(reader);
                 break;
-            } else if (command.equals("Items")) {
+            } else if (command.equalsIgnoreCase("Items")) {
                 //call-operation to change pin
                 releaseLoopItemsView(reader);
                 break;
-            } else if (command.equals("Lendings")) {
+            } else if (command.equalsIgnoreCase("Lendings")) {
                 //call-operation to make a transfer
                 releaseLoopLendingsView(reader);
                 break;
@@ -73,13 +73,13 @@ public class IOView {
 
             if (command.equals("Back")) {
                 break;
-            } else if (command.equals("Newuser")) {
+            } else if (command.equalsIgnoreCase("Newuser")) {
                 //call-operation to create new user
                 createUser(reader);
-            } else if (command.equals("listUsers")) {
+            } else if (command.equalsIgnoreCase("listUsers")) {
                 //call-operation to list users
                 listUsers(reader);
-            } else if (command.equals("listEnabledUsers")) {
+            } else if (command.equalsIgnoreCase("listEnabledUsers")) {
                 //call-operation to list enabled users to borrow books
                 listEnabledUsers(reader);
             } else System.out.println("Unknown command");
@@ -100,7 +100,7 @@ public class IOView {
                 createItem(reader);
             } else if (command.equalsIgnoreCase("listItems")){
                 listEjemplares(reader);
-            } else if (command.equalsIgnoreCase("listAvailableEjemplares")) {
+            } else if (command.equalsIgnoreCase("listAvailableItems")) {
                 listAvailableEjemplares(reader);
             } else System.out.println("Unknown command");
         }
@@ -117,10 +117,10 @@ public class IOView {
             if (command.equals("Back")) {
                 releaseLoopView(reader);
                 break;
-            } else if (command.equals("Newlending")) {
+            } else if (command.equalsIgnoreCase("Newlending")) {
                 //call-operation to create new lending
                 createLending(reader);
-            } else if (command.equals("listLendings")) {
+            } else if (command.equalsIgnoreCase("listLendings")) {
                 //call-operation to list users
                 listLendings(reader);
             } else System.out.println("Unknown command");
@@ -279,12 +279,12 @@ public class IOView {
 
     public static String listAvailableEjemplares(Scanner reader) {
         HashMap<String, String> listAvailableEjemplaresRequest = new HashMap<>();
-        listAvailableEjemplaresRequest.put("operation", "listAvailableEjemplares");
+        listAvailableEjemplaresRequest.put("operation", "listAvailableItems");
 
         HashMap<String, String> listAvailableEjemplaresResponse = FrontController.mainLoopController(listAvailableEjemplaresRequest);
         String listAvailableEjemplaresStatus = listAvailableEjemplaresResponse.get("status");
-        System.out.println("status list available ejemplares: " + listAvailableEjemplaresStatus + "\n");
-        System.out.println("Available ejemplares: " + listAvailableEjemplaresResponse.get("message") + "\n");
+        System.out.println("status list available items: " + listAvailableEjemplaresStatus + "\n");
+        System.out.println("Available items: " + listAvailableEjemplaresResponse.get("message") + "\n");
 
         return listAvailableEjemplaresStatus;
     }
