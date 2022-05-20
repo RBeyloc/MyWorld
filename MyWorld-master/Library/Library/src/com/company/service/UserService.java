@@ -10,11 +10,11 @@ import java.util.UUID;
 
 public class UserService {
 
-    public static boolean checkUserEnabledByUUID(UserMap users, UUID userUuid) {
+    public static boolean checkUserEnabledByUUID(UUID userUuid) {
         return UserRepository.isUserEnabled(userUuid);
     }
 
-    public static String listEnabledUsersToString(UserMap users) {
+    public static String listEnabledUsersToString() {
         String enabledUserList = "Enable users:\n";
         HashMap<String, User> result = UserRepository.listEnabledUsers();
         if (!result.isEmpty()) {
@@ -33,4 +33,7 @@ public class UserService {
         return UserRepository.getAllUsers();
     }
 
+    public static User getUserByUUID(UUID userUUID) {
+        return UserRepository.getUserByUUID(userUUID);
+    }
 }
