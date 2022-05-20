@@ -1,6 +1,7 @@
 package com.company.controller;
 
 import com.company.model.*;
+import com.company.service.LendingService;
 import com.company.service.EjemplarService;
 import com.company.service.UserService;
 
@@ -9,7 +10,7 @@ import java.util.UUID;
 
 public class LendingController {
 
-    /*public static HashMap<String, String> createLending(HashMap<String, String> request) {
+   /* public static HashMap<String, String> createLending(HashMap<String, String> request) {
         // Unpacking data
         UUID userUUID = UUID.fromString(request.get("userId"));
         UUID ejemplarUUID = UUID.fromString(request.get("ejemplarId"));
@@ -34,7 +35,7 @@ public class LendingController {
                 createLendingResponse.put("message", "Failure in retrieving user or ejemplar.");
             } else {
                 Lending newLending = new Lending(userUUID, ejemplarUUID);
-                if (!LendingService.createLending(newLending)) {
+                if (LendingService.create(newLending) != null) {
                     createLendingResponse.put("message", "Failure in saving new lending.");
                 } else {
                     user.setStatus("disabled");

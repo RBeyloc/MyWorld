@@ -1,6 +1,7 @@
 package com.company.repository;
 
 
+import com.company.model.Lending;
 import com.company.model.User;
 import com.company.utils.EntityManagerFactoryUtils;
 
@@ -107,6 +108,19 @@ public class UserRepository {
         return results;
 
 
+    }
+
+    public static User getUserByUUID(UUID userUUID) {
+        EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
+        EntityTransaction transaction = manager.getTransaction();
+        transaction.begin();
+
+        User userFound = null;
+        userFound = manager.find(User.class, userUUID);
+
+        transaction.commit();
+        manager.close();
+        return userFound;
     }
 }
 
