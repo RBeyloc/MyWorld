@@ -73,8 +73,7 @@ public class UserController {
         try {
             UUID uuid = UUID.fromString(dataToCheckUser.get("uuid"));
             isChecked = UserService.checkUserEnabledByUUID(users, uuid);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             isChecked = false;
         }
 

@@ -6,7 +6,10 @@ import com.company.utils.EntityManagerFactoryUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class UserRepository {
 
@@ -55,6 +58,53 @@ public class UserRepository {
         manager.close();
 
         return resultsUsersFound;
+
+    }
+
+    public static User update(User userToUpdate) {
+        EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
+        EntityTransaction transaction = manager.getTransaction();
+        transaction.begin();
+
+        User userUpdated = manager.merge(userToUpdate);
+
+        transaction.commit();
+        manager.close();
+
+        return userUpdated;
+    }
+
+    public static boolean isUserEnabled(UUID userUuid) {
+        EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
+        EntityTransaction transaction = manager.getTransaction();
+        transaction.begin();
+
+        List<User> resultsUsersFound = manager.createQuery("SELECT user FROM User user WHERE user.status = 'enabled' AND user.userUuid = '" + userUuid + "'")
+                .getResultList();
+
+        transaction.commit();
+        manager.close();
+
+        return !resultsUsersFound.isEmpty();
+    }
+
+    public static HashMap<String, User> listEnabledUsers() {
+
+        EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
+        EntityTransaction transaction = manager.getTransaction();
+        transaction.begin();
+
+        List<User> resultsUsersFound = manager.createQuery("SELECT user FROM User user WHERE user.status = 'enabled'")
+                .getResultList();
+
+        HashMap <String, User> results = new HashMap<>();
+        resultsUsersFound.forEach(u->{results.put(String.valueOf(u.getIdNumber()), u);});
+
+        transaction.commit();
+        manager.close();
+
+        return results;
+
 
     }
 }
