@@ -54,4 +54,19 @@ public class EjemplarRepository {
         return resultEjemplarsFound;
 
     }
+
+    public static List<Ejemplar> getEjemplarsAvailable() {
+        EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
+        EntityTransaction transaction = manager.getTransaction();
+        transaction.begin();
+
+        List<Ejemplar> resultEjemplarsFound = manager.createQuery("SELECT ejemplar FROM Ejemplar ejemplar WHERE ejemplar.available = : availability")
+                .setParameter("availability", true).getResultList();
+
+        transaction.commit();
+        manager.close();
+
+        return resultEjemplarsFound;
+
+    }
 }

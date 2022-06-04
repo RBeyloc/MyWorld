@@ -13,17 +13,6 @@ import java.util.UUID;
 
 public class EjemplarService {
 
-    public static String listAvailableEjemplaresToString(EjemplarList lista) {
-        String itemsList = "Items Available:\n";
-        if (!lista.listAvailableEjemplares().isEmpty()) {
-            for (Ejemplar ejemplar : lista.listAvailableEjemplares().values()) {
-                itemsList += ejemplar.toString() + "\n";
-            }
-
-        }
-        return itemsList;
-    }
-
     public static boolean checkEjemplarAvailableByUUID(EjemplarList lista, UUID ejemplarUUID){
         for (Map.Entry<UUID, Ejemplar> entry : lista.getEjemplares().entrySet()) {
             if (entry.getValue().getSku().equals(ejemplarUUID) && entry.getValue().isAvailable()){
@@ -41,6 +30,18 @@ public class EjemplarService {
     public static List<Ejemplar> getAllEjemplars() {
         List<Ejemplar> resultEjemplarsFound = EjemplarRepository.getAllEjemplars();
         return resultEjemplarsFound;
+    }
+
+    public static String getEjemplarsAvailable() {
+        List<Ejemplar> resultEjemplarsFound = EjemplarRepository.getEjemplarsAvailable();
+        String itemsList = "Items Available:\n";
+        if (!resultEjemplarsFound.isEmpty()) {
+            for (Ejemplar ejemplar : resultEjemplarsFound) {
+                itemsList += ejemplar.toString() + "\n";
+            }
+
+        }
+        return itemsList;
     }
 
 }

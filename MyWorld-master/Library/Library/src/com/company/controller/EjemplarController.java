@@ -11,8 +11,6 @@ import java.util.UUID;
 
 public class EjemplarController {
 
-    static EjemplarList lista = new EjemplarList();
-
     public static HashMap<String, String> createEjemplar(HashMap<String, String> dataToCreateItem) {
         String title = dataToCreateItem.get("title");
         String author = dataToCreateItem.get("author");
@@ -47,7 +45,7 @@ public class EjemplarController {
 
     public static HashMap<String, String> listAvailableEjemplares() {
 
-        String itemsList = EjemplarService.listAvailableEjemplaresToString(lista);
+        String itemsList = EjemplarService.getEjemplarsAvailable();
 
         HashMap<String, String> listItemsResponse = new HashMap<>();
         listItemsResponse.put("response", "listUsersResponse");
@@ -62,12 +60,7 @@ public class EjemplarController {
     }
 
 
-    public static EjemplarList getEjemplares() {
-        return lista;
-    }
-
-
-    public static HashMap<String, String> checkEjemplarAvailableByUUID(HashMap<String, String> dataToCheckEjemplar){
+    /*public static HashMap<String, String> checkEjemplarAvailableByUUID(HashMap<String, String> dataToCheckEjemplar){
         boolean isChecked;
         try {
             UUID uuid = UUID.fromString(dataToCheckEjemplar.get("uuid"));
@@ -87,7 +80,7 @@ public class EjemplarController {
         }
         return response;
 
-    }
+    }*/
 
 }
 
