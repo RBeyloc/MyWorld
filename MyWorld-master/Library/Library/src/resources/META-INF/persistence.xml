@@ -12,7 +12,7 @@
                          <property name="javax.persistence.jdbc.driver"
                                    value="org.h2.Driver" />
                          <property name="javax.persistence.jdbc.url"
-                                   value="jdbc:h2:tcp://localhost/../../../Usuaris/Alumne_mati1/h2/library" />
+                                   value="jdbc:h2:tcp://localhost/../../../Users/Alumne_mati1/h2/library" />
                          <property name="javax.persistence.jdbc.user"
                                    value="ricard" />
                          <property name="javax.persistence.jdbc.password"

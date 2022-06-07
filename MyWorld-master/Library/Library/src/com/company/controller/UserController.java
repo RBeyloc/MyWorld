@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class UserController {
-    //just an arraylist to store users
-    static UserMap users = new UserMap();
 
     public static HashMap<String, String> createUser(HashMap<String, String> dataToCreateUser) {
 
@@ -53,7 +51,7 @@ public class UserController {
     }
 
     public static HashMap<String, String> listEnabledUsers() {
-        String enabledUserList = UserService.listEnabledUsersToString(users);
+        String enabledUserList = UserService.listEnabledUsersToString();
 
         HashMap<String, String> listUsersResponse = new HashMap<>();
         listUsersResponse.put("response", "listEnabledUsersResponse");
@@ -71,7 +69,7 @@ public class UserController {
         boolean isChecked;
         try {
             UUID uuid = UUID.fromString(dataToCheckUser.get("uuid"));
-            isChecked = UserService.checkUserEnabledByUUID(users, uuid);
+            isChecked = UserService.checkUserEnabledByUUID(uuid);
         } catch (Exception e) {
             isChecked = false;
         }
@@ -94,13 +92,10 @@ public class UserController {
         User newUser2 = new User("Thomas", "Edison", "1982-07-30", "Carrer del Comte de Sert, 25, 08035, Barcelona", "Thomas@gmail.com", "653111345");
         User newUser3 = new User("Susan", "Lane", "1977-07-30", "Paseo de Gracia, 43, 08007 Barcelona", "lane@msn.com", "932 160 306");
         User newUser4 = new User("Marta", "Gross", "1980-07-30", "Paseo de Gracia, 92, 08008 Barcelona", "Martha.L@hotmail.com", "932 14 25 76");
-        users.addUser(newUser1);
-        users.addUser(newUser2);
-        users.addUser(newUser3);
-        users.addUser(newUser4);
+        UserService.create(newUser1);
+        UserService.create(newUser2);
+        UserService.create(newUser3);
+        UserService.create(newUser4);
     }
 
-    public static UserMap getUsers() {
-        return users;
-    }
 }
