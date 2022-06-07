@@ -1,5 +1,6 @@
 package com.company.service;
 
+import com.company.model.Ejemplar;
 import com.company.model.Lending;
 import com.company.model.LendingList;
 import com.company.repository.LendingRepository;
@@ -12,7 +13,7 @@ import java.util.UUID;
 
 public class LendingService {
 
-    public static Lending create(Lending lending) {
+    public static Lending createLending(Lending lending) {
         Lending lendingCreated = LendingRepository.create(lending);
         return lendingCreated;
     }
@@ -28,4 +29,8 @@ public class LendingService {
         return resultLendingsFound;
     }
 
+
+    public static Lending getLastLendingByEjemplarUUID(String ejemplarUUID) {
+        return LendingRepository.getLastLendingByEjemplarUUID(ejemplarUUID);
+    }
 }

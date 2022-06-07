@@ -1,6 +1,7 @@
 package com.company.repository;
 
 
+import com.company.model.Ejemplar;
 import com.company.model.User;
 import com.company.utils.EntityManagerFactoryUtils;
 
@@ -29,20 +30,17 @@ public class UserRepository {
         return userToSave;
     }
 
-    public static User getUserByUUID(String userEmail){
+    public static User getUserByUUID(UUID userUuid){
 
         EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
         EntityTransaction transaction = manager.getTransaction();
         transaction.begin();
 
-        List<User> resultsUserFound = manager.createQuery("SELECT user FROM User user WHERE user.email LIKE :email")
-                .setParameter("email", userEmail).getResultList();
+        User userFound = null;
+        userFound = manager.find(User.class, userUuid);
 
         transaction.commit();
         manager.close();
-
-        User userFound = null;
-        if ( resultsUserFound.size() != 0 ) userFound = resultsUserFound.get(0);
 
         return userFound;
     }
@@ -52,8 +50,7 @@ public class UserRepository {
         EntityTransaction transaction = manager.getTransaction();
         transaction.begin();
 
-        List<User> resultsUsersFound = manager.createQuery("SELECT user FROM User user")
-                .getResultList();
+        List<User> resultsUsersFound = manager.createQuery("SELECT user FROM User user").getResultList();
 
         transaction.commit();
         manager.close();
@@ -75,21 +72,7 @@ public class UserRepository {
         return userUpdated;
     }
 
-    public static boolean isUserEnabled(UUID userUuid) {
-        EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
-        EntityTransaction transaction = manager.getTransaction();
-        transaction.begin();
-
-        List<User> resultsUsersFound = manager.createQuery("SELECT user FROM User user WHERE user.status = 'enabled' AND user.userUuid = '" + userUuid + "'")
-                .getResultList();
-
-        transaction.commit();
-        manager.close();
-
-        return !resultsUsersFound.isEmpty();
-    }
-
-    public static HashMap<String, User> listEnabledUsers() {
+    public static List<User> listEnabledUsers() {
 
         EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
         EntityTransaction transaction = manager.getTransaction();
@@ -98,13 +81,10 @@ public class UserRepository {
         List<User> resultsUsersFound = manager.createQuery("SELECT user FROM User user WHERE user.status = 'enabled'")
                 .getResultList();
 
-        HashMap <String, User> results = new HashMap<>();
-        resultsUsersFound.forEach(u->{results.put(String.valueOf(u.getIdNumber()), u);});
-
         transaction.commit();
         manager.close();
 
-        return results;
+        return resultsUsersFound;
 
 
     }

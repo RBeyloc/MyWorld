@@ -1,5 +1,6 @@
 package com.company.repository;
 
+import com.company.model.Ejemplar;
 import com.company.model.Lending;
 import com.company.utils.EntityManagerFactoryUtils;
 
@@ -51,4 +52,18 @@ public class LendingRepository {
         return resultLendingsFound;
     }
 
+    public static Lending getLastLendingByEjemplarUUID(String ejemplarUUID) {
+        EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
+        EntityTransaction transaction = manager.getTransaction();
+        transaction.begin();
+
+        List<Lending> resultLendingsFound = manager.createQuery("SELECT lending FROM Lending lending WHERE lending.ejemplarid = : ejemplarUUID").
+                setParameter("ajemplarUUID", ejemplarUUID).getResultList();
+        //Take the last one
+        Lending resultLendingFound = resultLendingsFound.get(resultLendingsFound.size() - 1);
+
+        transaction.commit();
+        manager.close();
+        return resultLendingFound;
+    }
 }

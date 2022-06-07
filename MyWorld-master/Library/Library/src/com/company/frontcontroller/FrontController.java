@@ -14,7 +14,7 @@ public class FrontController {
         response.put("status", "error");
         //
         if (request.get("operation").equals("createUser")) response = UserController.createUser(request);
-       // else if (request.get("operation").equals( "createLending")) response = LendingController.createLending(request);
+        else if (request.get("operation").equals( "createLending")) response = LendingController.createLending(request);
         else if (request.get("operation").equals( "createItem")) response = EjemplarController.createEjemplar(request);
         else if (request.get("operation").equals( "listLendings")) response = LendingController.listLendings();
         else if (request.get("operation").equals( "listUsers")) response = UserController.listUsers();
@@ -23,7 +23,7 @@ public class FrontController {
         else if (request.get("operation").equals( "listAvailableEjemplares")) response = EjemplarController.listAvailableEjemplares();
         else if (request.get("operation").equals( "checkUserEnabledByUUID")) response = UserController.checkUserEnabledByUUID(request);
         else if (request.get("operation").equals( "listAvailableEjemplares")) response = EjemplarController.listAvailableEjemplares();
-        //else if (request.get("operation").equals( "checkEjemplarAvailableByUUID")) response = EjemplarController.checkEjemplarAvailableByUUID(request);
+        else if (request.get("operation").equals( "checkEjemplarAvailableByUUID")) response = EjemplarController.checkEjemplarAvailableByUUID(request);
 
 
         System.out.println(response);

@@ -81,6 +81,10 @@ public class Ejemplar {
         return dateOfAdquisition;
     }
 
+    public Boolean getAvailable(){
+        return this.available;
+    }
+
     @Override
     public String toString(){
         return this.getSku()  + " - " + this.getEjemplarTitle() + " - " + this.getAuthor() + " - Available: " + this.isAvailable();

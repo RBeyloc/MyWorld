@@ -1,9 +1,14 @@
 package com.company.service;
 
+import com.company.model.Ejemplar;
 import com.company.model.User;
 import com.company.model.UserMap;
+import com.company.repository.EjemplarRepository;
 import com.company.repository.UserRepository;
+import com.company.utils.EntityManagerFactoryUtils;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -11,18 +16,24 @@ import java.util.UUID;
 public class UserService {
 
     public static boolean checkUserEnabledByUUID(UUID userUuid) {
-        return UserRepository.isUserEnabled(userUuid);
+        User gotUser = UserRepository.getUserByUUID(userUuid);
+        return gotUser.getStatus().equals("enabled");
     }
 
     public static String listEnabledUsersToString() {
         String enabledUserList = "Enable users:\n";
-        HashMap<String, User> result = UserRepository.listEnabledUsers();
+        List<User> result = UserRepository.listEnabledUsers();
         if (!result.isEmpty()) {
-            for (User user : result.values()) {
+            for (User user : result) {
                 enabledUserList += user.toString() + "\n";
             }
         }
         return enabledUserList;
+    }
+
+    public static User getUserByUuid(UUID userUUID) {
+        User user = UserRepository.getUserByUUID(userUUID);
+        return user;
     }
 
     public static User create(User userToSave) {
@@ -31,6 +42,10 @@ public class UserService {
 
     public static List<User> getAllUsers() {
         return UserRepository.getAllUsers();
+    }
+
+    public static User update(User userToUpdate) {
+        return UserService.update(userToUpdate);
     }
 
 }

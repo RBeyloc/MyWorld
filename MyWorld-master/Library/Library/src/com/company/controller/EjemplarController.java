@@ -60,11 +60,11 @@ public class EjemplarController {
     }
 
 
-    /*public static HashMap<String, String> checkEjemplarAvailableByUUID(HashMap<String, String> dataToCheckEjemplar){
+    public static HashMap<String, String> checkEjemplarAvailableByUUID(HashMap<String, String> dataToCheckEjemplar){
         boolean isChecked;
         try {
             UUID uuid = UUID.fromString(dataToCheckEjemplar.get("uuid"));
-            isChecked = EjemplarService.checkEjemplarAvailableByUUID(lista, uuid);
+            isChecked = EjemplarService.checkEjemplarAvailableByUUID(uuid);
         }
         catch(Exception e) {
             isChecked = false;
@@ -80,7 +80,7 @@ public class EjemplarController {
         }
         return response;
 
-    }*/
+    }
 
 }
 

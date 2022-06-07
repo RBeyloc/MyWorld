@@ -3,6 +3,7 @@ package com.company.service;
 import com.company.model.Ejemplar;
 import com.company.model.EjemplarList;
 import com.company.model.Lending;
+import com.company.model.User;
 import com.company.repository.EjemplarRepository;
 import com.company.repository.LendingRepository;
 
@@ -13,15 +14,6 @@ import java.util.UUID;
 
 public class EjemplarService {
 
-    public static boolean checkEjemplarAvailableByUUID(EjemplarList lista, UUID ejemplarUUID){
-        for (Map.Entry<UUID, Ejemplar> entry : lista.getEjemplares().entrySet()) {
-            if (entry.getValue().getSku().equals(ejemplarUUID) && entry.getValue().isAvailable()){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static Ejemplar create(Ejemplar ejemplar) {
         Ejemplar ejemplarCreated = EjemplarRepository.create(ejemplar);
         return ejemplarCreated;
@@ -30,6 +22,11 @@ public class EjemplarService {
     public static List<Ejemplar> getAllEjemplars() {
         List<Ejemplar> resultEjemplarsFound = EjemplarRepository.getAllEjemplars();
         return resultEjemplarsFound;
+    }
+
+    public static boolean checkEjemplarAvailableByUUID(UUID ejemplarUUID){
+        Ejemplar gotEjemplar = EjemplarRepository.getEjemplarByUUID(ejemplarUUID);
+        return gotEjemplar.getAvailable();
     }
 
     public static String getEjemplarsAvailable() {
@@ -42,6 +39,15 @@ public class EjemplarService {
 
         }
         return itemsList;
+    }
+
+    public static Ejemplar getEjemplarByUuid(UUID ejemplarUUID) {
+        Ejemplar ejemplar = EjemplarRepository.getEjemplarByUUID(ejemplarUUID);
+        return ejemplar;
+    }
+
+    public static Ejemplar update(Ejemplar ejemplarToUpdate) {
+        return EjemplarService.update(ejemplarToUpdate);
     }
 
 }

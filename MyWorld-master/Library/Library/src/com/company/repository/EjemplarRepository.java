@@ -1,6 +1,7 @@
 package com.company.repository;
 
 import com.company.model.Ejemplar;
+import com.company.model.User;
 import com.company.utils.EntityManagerFactoryUtils;
 
 import javax.persistence.EntityManager;
@@ -53,6 +54,19 @@ public class EjemplarRepository {
 
         return resultEjemplarsFound;
 
+    }
+
+    public static Ejemplar Update(Ejemplar ejemplarToUpdate) {
+        EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
+        EntityTransaction transaction = manager.getTransaction();
+        transaction.begin();
+
+        Ejemplar ejemplarUpdated = manager.merge(ejemplarToUpdate);
+
+        transaction.commit();
+        manager.close();
+
+        return ejemplarUpdated;
     }
 
     public static List<Ejemplar> getEjemplarsAvailable() {

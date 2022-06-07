@@ -2,6 +2,7 @@ package com.company.controller;
 
 import com.company.model.*;
 import com.company.service.EjemplarService;
+import com.company.service.LendingService;
 import com.company.service.UserService;
 
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import java.util.UUID;
 
 public class LendingController {
 
-    /*public static HashMap<String, String> createLending(HashMap<String, String> request) {
+    public static HashMap<String, String> createLending(HashMap<String, String> request) {
         // Unpacking data
         UUID userUUID = UUID.fromString(request.get("userId"));
         UUID ejemplarUUID = UUID.fromString(request.get("ejemplarId"));
@@ -26,26 +27,28 @@ public class LendingController {
             createLendingResponse.put("message", "Ejemplar don't exists or is not available to be lent.");
         } else {
             // Get object user and ejemplar
-            User user = UserService.getUserByUUID(userUUID);
-            Ejemplar ejemplar = EjemplarService.getEjemplarByUUID(ejemplarUUID);
+            User user = UserService.getUserByUuid(userUUID);
+            Ejemplar ejemplar = EjemplarService.getEjemplarByUuid(ejemplarUUID);
 
             // Creating the new lending object and put into lendings "map" object
             if ((user == null) || (ejemplar == null)) {
                 createLendingResponse.put("message", "Failure in retrieving user or ejemplar.");
             } else {
                 Lending newLending = new Lending(userUUID, ejemplarUUID);
-                if (!LendingService.createLending(newLending)) {
+                if (LendingService.createLending(newLending).getUserID()!= null) {
                     createLendingResponse.put("message", "Failure in saving new lending.");
                 } else {
                     user.setStatus("disabled");
+                    UserService.update(user);
                     ejemplar.setAvailable(false);
+                    EjemplarService.update(ejemplar);
                     createLendingResponse.put("status", "success");
                     createLendingResponse.put("message", "Lending created successfully.");
                 }
             }
         }
         return createLendingResponse;
-    }*/
+    }
 
     public static HashMap<String, String> listLendings() {
         LendingList lendingList = new LendingList();
@@ -62,19 +65,21 @@ public class LendingController {
         return listLendingsResponse;
     }
 
-    /* public static HashMap<String, String> makeDevolution(HashMap<String, String> request){
+    public static HashMap<String, String> makeDevolution(HashMap<String, String> request){
         String ejemplarUUID = request.get("ejemplarUUID");
         Lending lending = null;
         Ejemplar ejemplar = null;
         boolean statusOperation = false;
-        ejemplar = ejemplares.findBySku(UUID.fromString(ejemplarUUID));
+        ejemplar = EjemplarService.getEjemplarByUuid(UUID.fromString(ejemplarUUID));
 
         if(ejemplar != null) {
             LendingList lendings = new LendingList();
-            lending = getLastLendingByEjemplar(ejemplar);
+            lending = LendingService.getLastLendingByEjemplarUUID(ejemplarUUID);
         }
         if(lending != null) {
             statusOperation = lending.devolution();
+            UserService.update(lending.getUser());
+            EjemplarService.update(lending.getEjemplar());
         }
 
         HashMap<String, String> devolutionResponse = new HashMap<>();
@@ -90,5 +95,5 @@ public class LendingController {
             devolutionResponse.put("status", "Devolution succeded");
         }
         return devolutionResponse;
-    } */
+    }
 }

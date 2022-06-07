@@ -45,6 +45,8 @@ public class Lending {
     public boolean devolution() {
         this.returnRealDate = LocalDate.now();
         this.status = status.RETURNED;
+        this.ejemplar.setAvailable(true);
+        this.user.setStatus("Enabled");
         return true;
     }
 
