@@ -36,7 +36,7 @@ public class UserController {
     }
 
     public static HashMap<String, String> listUsers() {
-        String usersList = UserService.getAllUsers().toString();
+        String usersList = UserService.listAllUsersToString();
 
         HashMap<String, String> listUsersResponse = new HashMap<>();
         listUsersResponse.put("response", "listUsersResponse");

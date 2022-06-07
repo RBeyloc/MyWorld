@@ -125,11 +125,11 @@ public class Lending {
     }
 
     public UUID getUserID() {
-        return this.getUser().getIdNumber();
+        return this.userId;
     }
 
     public UUID getEjemplarID() {
-        return this.getEjemplar().getSku();
+        return this.ejemplarId;
     }
 
 }

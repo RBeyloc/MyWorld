@@ -6,6 +6,7 @@ import com.company.model.Lending;
 import com.company.model.User;
 import com.company.repository.EjemplarRepository;
 import com.company.repository.LendingRepository;
+import com.company.repository.UserRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,17 @@ public class EjemplarService {
         return resultEjemplarsFound;
     }
 
+    public static String listAllEjemplaresToString() {
+        String allEjemplaresList = "All ejemplares:\n";
+        List<Ejemplar> result = EjemplarRepository.getAllEjemplars();
+        if (!result.isEmpty()) {
+            for (Ejemplar ejemplar : result) {
+                allEjemplaresList += ejemplar.toString() + "\n";
+            }
+        }
+        return allEjemplaresList;
+    }
+
     public static boolean checkEjemplarAvailableByUUID(UUID ejemplarUUID){
         Ejemplar gotEjemplar = EjemplarRepository.getEjemplarByUUID(ejemplarUUID);
         return gotEjemplar.getAvailable();
@@ -39,6 +51,17 @@ public class EjemplarService {
 
         }
         return itemsList;
+    }
+
+    public static String listAvailabledEjemplaresToString() {
+        String availableEjemplaresList = "Available ejemplares:\n";
+        List<Ejemplar> result = EjemplarRepository.getEjemplarsAvailable();
+        if (!result.isEmpty()) {
+            for (Ejemplar ejemplar : result) {
+                availableEjemplaresList += ejemplar.toString() + "\n";
+            }
+        }
+        return availableEjemplaresList;
     }
 
     public static Ejemplar getEjemplarByUuid(UUID ejemplarUUID) {

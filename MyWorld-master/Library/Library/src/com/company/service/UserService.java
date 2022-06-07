@@ -21,7 +21,7 @@ public class UserService {
     }
 
     public static String listEnabledUsersToString() {
-        String enabledUserList = "Enable users:\n";
+        String enabledUserList = "Enabled users:\n";
         List<User> result = UserRepository.listEnabledUsers();
         if (!result.isEmpty()) {
             for (User user : result) {
@@ -29,6 +29,17 @@ public class UserService {
             }
         }
         return enabledUserList;
+    }
+
+    public static String listAllUsersToString() {
+        String userList = "All users:\n";
+        List<User> result = UserRepository.getAllUsers();
+        if (!result.isEmpty()) {
+            for (User user : result) {
+                userList += user.toString() + "\n";
+            }
+        }
+        return userList;
     }
 
     public static User getUserByUuid(UUID userUUID) {

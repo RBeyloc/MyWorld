@@ -51,8 +51,7 @@ public class LendingController {
     }
 
     public static HashMap<String, String> listLendings() {
-        LendingList lendingList = new LendingList();
-        String lendingListStringyfied = lendingList.toString();
+        String lendingListStringyfied = LendingService.listAllLendingsToString();
         HashMap<String, String> listLendingsResponse = new HashMap<>();
         listLendingsResponse.put("response", "listLendingsResponse");
         if (!lendingListStringyfied.equals("Lendings Map:\n")) {

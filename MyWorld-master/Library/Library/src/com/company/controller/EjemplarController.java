@@ -29,7 +29,7 @@ public class EjemplarController {
     }
 
     public static HashMap<String, String> listItems() {
-        String ejemplarsList = EjemplarService.getAllEjemplars().toString();
+        String ejemplarsList = EjemplarService.listAllEjemplaresToString();
 
         HashMap<String, String> listItemsResponse = new HashMap<>();
         listItemsResponse.put("response", "listUsersResponse");
@@ -45,7 +45,7 @@ public class EjemplarController {
 
     public static HashMap<String, String> listAvailableEjemplares() {
 
-        String itemsList = EjemplarService.getEjemplarsAvailable();
+        String itemsList = EjemplarService.listAvailabledEjemplaresToString();
 
         HashMap<String, String> listItemsResponse = new HashMap<>();
         listItemsResponse.put("response", "listUsersResponse");
