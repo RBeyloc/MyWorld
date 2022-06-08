@@ -34,8 +34,8 @@ public class LendingController {
             if ((user == null) || (ejemplar == null)) {
                 createLendingResponse.put("message", "Failure in retrieving user or ejemplar.");
             } else {
-                Lending newLending = new Lending(userUUID, ejemplarUUID);
-                if (LendingService.createLending(newLending).getUserID()!= null) {
+                Lending newLending = new Lending(userUUID, user, ejemplarUUID, ejemplar);
+                if (LendingService.createLending(newLending).getUserID() == null) {
                     createLendingResponse.put("message", "Failure in saving new lending.");
                 } else {
                     user.setStatus("disabled");
@@ -65,34 +65,38 @@ public class LendingController {
     }
 
     public static HashMap<String, String> makeDevolution(HashMap<String, String> request){
-        String ejemplarUUID = request.get("ejemplarUUID");
+        String ejemplarUUID = request.get("uuid");
         Lending lending = null;
         Ejemplar ejemplar = null;
         boolean statusOperation = false;
         ejemplar = EjemplarService.getEjemplarByUuid(UUID.fromString(ejemplarUUID));
 
         if(ejemplar != null) {
-            LendingList lendings = new LendingList();
             lending = LendingService.getLastLendingByEjemplarUUID(ejemplarUUID);
         }
         if(lending != null) {
             statusOperation = lending.devolution();
-            UserService.update(lending.getUser());
-            EjemplarService.update(lending.getEjemplar());
+            LendingService.update(lending);
+            UUID userId = lending.getUserID();
+            User user = UserService.getUserByUuid(userId);
+            user.setStatus("enabled");
+            UserService.update(user);
+            ejemplar.setAvailable(true);
+            EjemplarService.update(ejemplar);
         }
 
-        HashMap<String, String> devolutionResponse = new HashMap<>();
-        devolutionResponse.put("status", "failed");
-        devolutionResponse.put("response", "Devolution failed");
+        HashMap<String, String> makeDevolutionResponse = new HashMap<>();
+        makeDevolutionResponse.put("status", "failed");
+        makeDevolutionResponse.put("response", "Devolution failed");
 
         if(ejemplar == null) {
-            devolutionResponse.put("response", "Can not retrieve the book reference");
+            makeDevolutionResponse.put("response", "Can not retrieve the book reference");
         } else if (lending == null) {
-            devolutionResponse.put("response", "Can not retrieve the last lending reference");
+            makeDevolutionResponse.put("response", "Can not retrieve the last lending reference");
         } else if (statusOperation) {
-            devolutionResponse.put("status", "success");
-            devolutionResponse.put("status", "Devolution succeded");
+            makeDevolutionResponse.put("status", "success");
+            makeDevolutionResponse.put("response", "Returned");
         }
-        return devolutionResponse;
+        return makeDevolutionResponse;
     }
 }

@@ -57,13 +57,26 @@ public class LendingRepository {
         EntityTransaction transaction = manager.getTransaction();
         transaction.begin();
 
-        List<Lending> resultLendingsFound = manager.createQuery("SELECT lending FROM Lending lending WHERE lending.ejemplarid = : ejemplarUUID").
-                setParameter("ajemplarUUID", ejemplarUUID).getResultList();
+        List<Lending> resultLendingsFound = manager.createQuery("SELECT lending FROM Lending lending WHERE lending.ejemplarId =: ejemplarUUID").
+                setParameter("ejemplarUUID", UUID.fromString(ejemplarUUID)).getResultList();
         //Take the last one
         Lending resultLendingFound = resultLendingsFound.get(resultLendingsFound.size() - 1);
 
         transaction.commit();
         manager.close();
         return resultLendingFound;
+    }
+
+    public static Lending update(Lending lendingToUpdate) {
+        EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
+        EntityTransaction transaction = manager.getTransaction();
+        transaction.begin();
+
+        Lending lendingUpdated = manager.merge(lendingToUpdate);
+
+        transaction.commit();
+        manager.close();
+
+        return lendingUpdated;
     }
 }

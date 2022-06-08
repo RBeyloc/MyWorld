@@ -56,7 +56,7 @@ public class UserService {
     }
 
     public static User update(User userToUpdate) {
-        return UserService.update(userToUpdate);
+        return UserRepository.update(userToUpdate);
     }
 
 }

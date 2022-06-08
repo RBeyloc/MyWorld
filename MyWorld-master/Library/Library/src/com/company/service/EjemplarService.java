@@ -70,7 +70,7 @@ public class EjemplarService {
     }
 
     public static Ejemplar update(Ejemplar ejemplarToUpdate) {
-        return EjemplarService.update(ejemplarToUpdate);
+        return EjemplarRepository.update(ejemplarToUpdate);
     }
 
 }

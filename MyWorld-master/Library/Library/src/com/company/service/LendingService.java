@@ -4,6 +4,7 @@ import com.company.model.Ejemplar;
 import com.company.model.Lending;
 import com.company.model.LendingList;
 import com.company.model.User;
+import com.company.repository.EjemplarRepository;
 import com.company.repository.LendingRepository;
 import com.company.repository.UserRepository;
 import com.company.utils.EntityManagerFactoryUtils;
@@ -45,5 +46,10 @@ public class LendingService {
 
     public static Lending getLastLendingByEjemplarUUID(String ejemplarUUID) {
         return LendingRepository.getLastLendingByEjemplarUUID(ejemplarUUID);
+    }
+
+
+    public static Lending update(Lending lendingToUpdate) {
+        return LendingRepository.update(lendingToUpdate);
     }
 }

@@ -24,6 +24,7 @@ public class FrontController {
         else if (request.get("operation").equals( "checkUserEnabledByUUID")) response = UserController.checkUserEnabledByUUID(request);
         else if (request.get("operation").equals( "listAvailableEjemplares")) response = EjemplarController.listAvailableEjemplares();
         else if (request.get("operation").equals( "checkEjemplarAvailableByUUID")) response = EjemplarController.checkEjemplarAvailableByUUID(request);
+        else if (request.get("operation").equals( "makeDevolution")) response = LendingController.makeDevolution(request);
 
 
         System.out.println(response);

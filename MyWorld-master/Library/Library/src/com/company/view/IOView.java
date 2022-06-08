@@ -121,8 +121,11 @@ public class IOView {
                 //call-operation to create new lending
                 createLending(reader);
             } else if (command.equals("listLendings")) {
-                //call-operation to list users
+                //call-operation to list lendings
                 listLendings(reader);
+            } else if (command.equals("makeDevolution")) {
+                //call-operation to close lending
+                makeDevolution(reader);
             } else System.out.println("Unknown command");
         }
         releaseLoopView(reader);
@@ -299,6 +302,18 @@ public class IOView {
 
         return listEjemplaresStatus;
 
+    }
+
+    public static boolean makeDevolution(Scanner reader) {
+        System.out.println("Write the book Id to return:\n");
+        String itemId = Utilities.ask(reader, "Book Id?");
+        HashMap<String, String> makeDevolutionRequest = new HashMap<>();
+        makeDevolutionRequest.put("operation", "makeDevolution");
+        makeDevolutionRequest.put("uuid", itemId);
+        HashMap<String, String> makeDevolutionResponse = FrontController.mainLoopController(makeDevolutionRequest);
+        String makeDevolutionStatus = makeDevolutionResponse.get("status");
+        boolean checked = makeDevolutionStatus.equals("success");
+        return checked;
     }
 
 }

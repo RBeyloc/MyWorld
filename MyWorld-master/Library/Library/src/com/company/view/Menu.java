@@ -36,6 +36,7 @@ public class Menu {
         //Utilities.clearConsole();
         System.out.println("1-Newlending");
         System.out.println("2-listLendings");
+        System.out.println("3-makeDevolution");
         System.out.println("0-Back");
     }
 

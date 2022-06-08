@@ -1,5 +1,8 @@
 package com.company.model;
 
+import com.company.service.EjemplarService;
+import com.company.service.UserService;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -40,13 +43,24 @@ public class Lending {
         this.lendingDate = LocalDate.now();
         this.returnLimitDate = this.lendingDate.plusDays(7);
         this.status = status.ONDATE;
+        this.ejemplar = EjemplarService.getEjemplarByUuid(ejemplarId);
+        this.user = UserService.getUserByUuid(userId);
+    }
+
+    public Lending(UUID userId, User user, UUID ejemplarId, Ejemplar ejemplar) {
+        this.lendingUuid = UUID.randomUUID();
+        this.userId = userId;
+        this.ejemplarId = ejemplarId;
+        this.lendingDate = LocalDate.now();
+        this.returnLimitDate = this.lendingDate.plusDays(7);
+        this.status = status.ONDATE;
+        this.ejemplar = ejemplar;
+        this.user = user;
     }
 
     public boolean devolution() {
         this.returnRealDate = LocalDate.now();
         this.status = status.RETURNED;
-        this.ejemplar.setAvailable(true);
-        this.user.setStatus("Enabled");
         return true;
     }
 
@@ -59,8 +73,8 @@ public class Lending {
     @Override
     public String toString() {
         return  "\nLending:" +
-                "\n  user=" + user +
-                "\n  ejemplar=" + ejemplar +
+                "\n  user=" + userId +
+                "\n  ejemplar=" + ejemplarId +
                 "\n  lendingDate=" + lendingDate +
                 "\n  returnLimitDate=" + returnLimitDate +
                 "\n  returnRealDate=" + returnRealDate +

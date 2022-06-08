@@ -56,7 +56,7 @@ public class EjemplarRepository {
 
     }
 
-    public static Ejemplar Update(Ejemplar ejemplarToUpdate) {
+    public static Ejemplar update(Ejemplar ejemplarToUpdate) {
         EntityManager manager = EntityManagerFactoryUtils.getEntityManger();
         EntityTransaction transaction = manager.getTransaction();
         transaction.begin();
